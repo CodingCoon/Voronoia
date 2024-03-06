@@ -1,17 +1,17 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class ApplyPhase : MonoBehaviour, IPhase
+public class ApplyPhase : AbstractPhase
 {
     [SerializeField] private VoronoiPhase voronoiPhase;
     [SerializeField] private Game game;
 
-    public PhaseType GetPhaseType()
+    public override PhaseType GetPhaseType()
     {
         return PhaseType.APPLY;
     }
 
-    public void OnStart()
+    public override void OnStart()
     {
         StartCoroutine(ExecuteActions());   
     }
@@ -24,11 +24,11 @@ public class ApplyPhase : MonoBehaviour, IPhase
         }
     }
 
-    public void OnEnd()
+    public override void OnEnd()
     {
     }
 
-    public IPhase GetNextPhase()
+    public override AbstractPhase GetNextPhase()
     {
         return voronoiPhase;
     }

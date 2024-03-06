@@ -29,8 +29,6 @@ public class Preacher : MonoBehaviour, IPreacher, IVoronoiCellOwner
         knob.transform.position = position;
         knob.Setup(Religion);
         area.Setup(Religion);
-
-        if (religion.Name.Equals("Porter")) Power = 3f;
     }
 
     public void Reset()

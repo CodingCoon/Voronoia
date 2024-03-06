@@ -1,22 +1,22 @@
 ﻿using UnityEngine;
 
-public class ActionPhase : MonoBehaviour, IPhase
+public class ActionPhase : AbstractPhase
 {
     [SerializeField] private ApplyPhase applyPhase;
     [SerializeField] private Game game;
 
     
-    public PhaseType GetPhaseType()
+    public override PhaseType GetPhaseType()
     {
         return PhaseType.ACTION;
     }
 
-    public void OnStart()
+    public override void OnStart()
     {
         game.GetPreachers().ForEach(p => p.Reset());
     }
 
-    public void OnEnd()
+    public override void OnEnd()
     {
         foreach (Preacher preacher in game.GetPreachers())
         {
@@ -27,7 +27,7 @@ public class ActionPhase : MonoBehaviour, IPhase
         }
     }
 
-    public IPhase GetNextPhase()
+    public override AbstractPhase GetNextPhase()
     {
         return applyPhase;
     }

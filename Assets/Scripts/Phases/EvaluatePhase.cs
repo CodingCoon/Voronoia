@@ -1,26 +1,26 @@
 ﻿using UnityEngine;
 
-public class EvaluatePhase : MonoBehaviour, IPhase
+public class EvaluatePhase : AbstractPhase
 {
     [SerializeField] private ActionPhase actionPhase;
     [SerializeField] private Game game;
 
-    public PhaseType GetPhaseType()
+    public override PhaseType GetPhaseType()
     {
         return PhaseType.EVALUATION;
     }
 
-    public void OnStart()
+    public override void OnStart()
     {
         game.GetPreachers().ForEach(p => p.Evaluate());
         game.GetReligions().ForEach(r => r.UpdateIncome());
     }
 
-    public void OnEnd()
+    public override void OnEnd()
     {
     }
 
-    public IPhase GetNextPhase()
+    public override AbstractPhase GetNextPhase()
     {
         return actionPhase;
     }

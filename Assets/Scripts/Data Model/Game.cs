@@ -5,14 +5,12 @@ public class Game : MonoBehaviour
 {
     public static Game INSTANCE;
 
-    [SerializeField] VoronoiController voronoi; // todo das hätte ich hier gerne raus, das muss das Game nicht wissen
-
     private List<Religion> religions = new List<Religion>();
     private List<Round> rounds = new List<Round>();
 
 
-    [SerializeField] private ActionPhase initialPhase; // todo offen gestalten
-    private IPhase currentPhase; 
+    [SerializeField] private AbstractPhase initialPhase; 
+    private AbstractPhase currentPhase; 
     public PhaseType PhaseType { get; private set; }
     
     
@@ -44,7 +42,7 @@ public class Game : MonoBehaviour
         {
             currentPhase.OnEnd();
         }
-        IPhase next = currentPhase == null ? initialPhase : currentPhase.GetNextPhase();
+        AbstractPhase next = currentPhase == null ? initialPhase : currentPhase.GetNextPhase();
 
         print("Next Phase " + next.GetPhaseType());
         currentPhase = next;

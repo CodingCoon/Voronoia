@@ -1,18 +1,18 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class VoronoiPhase : MonoBehaviour, IPhase
+public class VoronoiPhase : AbstractPhase
 {
     [SerializeField] private EvaluatePhase evaluatePhase;
     [SerializeField] private VoronoiController voronoi;
     [SerializeField] private Game game;   
     
-    public PhaseType GetPhaseType()
+    public override PhaseType GetPhaseType()
     {
         return PhaseType.VORONOI;
     }
 
-    public void OnStart()
+    public override void OnStart()
     {
         voronoi.MarkDirty();
     }
@@ -24,11 +24,11 @@ public class VoronoiPhase : MonoBehaviour, IPhase
     }
 
 
-    public void OnEnd()
+    public override void OnEnd()
     {
     }
 
-    public IPhase GetNextPhase()
+    public override AbstractPhase GetNextPhase()
     {
         return evaluatePhase;
     }
