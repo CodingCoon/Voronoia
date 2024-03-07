@@ -1,8 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RingMenu : MonoBehaviour
 {
     [SerializeField] private Preacher preacher;
+    [SerializeField] private PreacherKnob preacherKnob;
+
+    internal void OnShow()
+    {
+        if (GameManager.Instance.IsTutorial) 
+        {
+            List<MenuButton.ActionType> disabledActionTypes = TutorialManager.Instance.DisabledActionTypes;
+            foreach (var item in GetComponentsInChildren<MenuButton>())
+            {
+                item.SetInteractable(! disabledActionTypes.Contains(item.GetActionType()));
+            }
+        }
+    }
 
     internal void Execute(MenuButton.ActionType actionType)
     {
@@ -31,6 +45,8 @@ public class RingMenu : MonoBehaviour
 
     private void StartMove()
     {
+        preacherKnob.Start
+           
         print("Todo Move");
     }
 

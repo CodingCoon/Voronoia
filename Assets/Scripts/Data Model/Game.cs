@@ -36,7 +36,7 @@ public class Game : MonoBehaviour
         NextPhase();
     }
 
-    private void NextPhase()
+    public void NextPhase()
     {
         if (currentPhase != null)
         {

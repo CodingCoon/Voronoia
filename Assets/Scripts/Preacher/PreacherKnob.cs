@@ -6,6 +6,8 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
 {   
     private IReligion religion;
 
+    private bool hovered;
+
     [SerializeField] private Preacher preacher;
     [SerializeField] private SpriteRenderer inner;
     [SerializeField] private new CircleCollider2D collider;
@@ -13,7 +15,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
     private bool dragged = false;
     private bool isSplit = false;
 
-    [SerializeField] private Transform ringMenu;
+    [SerializeField] private RingMenu ringMenu;
     private bool showsRing = false;
 
     public void Setup(IReligion religion)
@@ -26,7 +28,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
 
     private void Awake()
     {
-        ringMenu.localScale = Vector3.zero;
+        ringMenu.transform.localScale = Vector3.zero;
     }
 
     private void Update()
@@ -39,7 +41,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
                 showsRing = false;
                 StartCoroutine(HideRing());
             }
-            else
+            else if (hovered)
             {
                 showsRing = true;
                 StartCoroutine(ShowRing());
@@ -79,6 +81,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
 
     private IEnumerator ShowRing()
     {
+        ringMenu.OnShow();
         float timeElapsed = 0f;
         float progress = 0f;
         Vector2 startScale = transform.localScale;
@@ -101,8 +104,8 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
             timeElapsed += Time.deltaTime;
             progress = Mathf.Clamp(timeElapsed / 0.5f, 0f, 1f);
             transform.localScale = Vector2.Lerp(endScale, startScale, progress);
-            ringMenu.localScale  = Vector2.Lerp(Vector2.zero, ringTargetScale, progress);
-            ringMenu.eulerAngles = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 360f), progress);
+            ringMenu.transform.localScale  = Vector2.Lerp(Vector2.zero, ringTargetScale, progress);
+            ringMenu.transform.eulerAngles = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 360f), progress);
             yield return null;
         }
     }
@@ -111,13 +114,13 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
     {
         float timeElapsed = 0f;
         float progress = 0f;
-        Vector2 startScale = ringMenu.localScale;
+        Vector2 startScale = ringMenu.transform.localScale;
 
         while (progress < 1f)
         {
             timeElapsed += Time.deltaTime;
             progress = Mathf.Clamp(timeElapsed / 0.5f, 0f, 1f);
-            ringMenu.localScale = Vector2.Lerp(startScale, Vector2.zero, progress);
+            ringMenu.transform.localScale = Vector2.Lerp(startScale, Vector2.zero, progress);
             yield return null;
         }
     }
@@ -134,6 +137,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
 
     public void OnHover(bool hovered)
     {
+        this.hovered = hovered;
         if (hovered)
         {
             inner.color = Color.clear;

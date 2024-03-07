@@ -1,8 +1,8 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
-public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class MenuButton : MonoBehaviour, IMouseListener
 {
+    private static Color DISABLED_COLOR = Color.black;
     private static Color HOVER_COLOR = Color.gray;
     private static Color DEFAULT_COLOR = Color.white;
 
@@ -10,22 +10,33 @@ public class MenuButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     [SerializeField] private RingMenu menu;
     [SerializeField] private ActionType actionType;
 
+    private bool interactable = true;
+    private bool hovered = false;
+
     private void Update()
     {
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    menu.Execute(actionType);
-        //}
-    }
- 
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        spriteRenderer.color = HOVER_COLOR;
+        if (Input.GetMouseButtonDown(0) && hovered && interactable)
+        {
+            menu.Execute(actionType);
+        }
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnHover(bool hovered)
     {
-        spriteRenderer.color = DEFAULT_COLOR;
+        if (!interactable) return; 
+        this.hovered = hovered;
+        spriteRenderer.color = hovered ? HOVER_COLOR : DEFAULT_COLOR;
+    }
+
+    public ActionType GetActionType()
+    {
+        return actionType;
+    }
+
+    public void SetInteractable(bool interactable)
+    {
+        this.interactable = interactable;
+        spriteRenderer.color = interactable ? DEFAULT_COLOR : DISABLED_COLOR;
     }
 
     public enum ActionType

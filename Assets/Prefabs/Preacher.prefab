@@ -403,7 +403,7 @@ MonoBehaviour:
   inner: {fileID: 3517634222299383631}
   collider: {fileID: 3737594344888178204}
   preview: {fileID: 5935123128446074363}
-  ringMenu: {fileID: 1589372328851102661}
+  ringMenu: {fileID: 3581378202853062811}
 --- !u!1 &5935123128446074363
 GameObject:
   m_ObjectHideFlags: 0

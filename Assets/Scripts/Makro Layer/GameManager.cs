@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine.SceneManagement;
 
 public class GameManager : Singleton<GameManager>
@@ -6,8 +7,9 @@ public class GameManager : Singleton<GameManager>
     public bool tutorialHook;
 
 
-    void Start()
+    public override void Awake()
     {
+        base.Awake();
         IsTutorial = tutorialHook;
     }
 

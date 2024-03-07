@@ -1,18 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Game game;
+    [SerializeField] private Button nextButton;
 
-    // Update is called once per frame
+
     void Update()
     {
-        
+        if (GameManager.Instance.IsTutorial)
+        {
+            nextButton.interactable = TutorialManager.Instance.NextRoundButtonEnabled;
+        }
+    }
+
+    public void NextPhase()
+    {
+        game.NextPhase();
     }
 }

@@ -26,7 +26,7 @@ public class Preacher : MonoBehaviour, IPreacher, IVoronoiCellOwner
     public void Setup(IReligion religion, Vector2 position)
     {
         this.Religion = religion;
-        knob.transform.position = position;
+        knob.transform.position = new Vector3(position.x, position.y, -5);
         knob.Setup(Religion);
         area.Setup(Religion);
     }
