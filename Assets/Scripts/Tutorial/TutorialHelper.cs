@@ -13,6 +13,7 @@ public class TutorialHelper : MonoBehaviour
             if (item.IsPlayer)
             {
                 Preacher p = item.GetPreachers().First();
+                print(p.HasAction());
                 return p.HasAction();
             }
         }

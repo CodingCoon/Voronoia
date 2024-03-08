@@ -31,7 +31,7 @@ public class MoveAction : IAction
             yield return null;
         }
 
-        preacherKnob.Hide();
+        preacherKnob.HidePreview();
     }
 
     public float GetPrice()

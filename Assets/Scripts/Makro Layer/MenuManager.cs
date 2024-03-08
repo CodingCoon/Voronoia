@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuManager : MonoBehaviour
 {
+    [SerializeField] private ScreenBlend screenFader; 
+
     void Start()
     {
         // todo blende EXIT aus beim WebGl
@@ -11,7 +13,8 @@ public class MenuManager : MonoBehaviour
     public void StartTutorial()
     {
         GameManager.Instance.IsTutorial = true;
-        SceneManager.LoadScene("GameScene");
+        GameManager.Instance.FadeOver = true;
+        screenFader.FadeOut(() => SceneManager.LoadScene("GameScene"));
     }
 
     public void StartGame()

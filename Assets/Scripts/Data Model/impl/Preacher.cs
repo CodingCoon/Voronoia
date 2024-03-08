@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -103,11 +104,12 @@ public class Preacher : MonoBehaviour, IPreacher, IVoronoiCellOwner
 
     public void HideKnob()
     {
-        knob.Hide();
+        knob.HidePreview();
     }
 
     public void UpdateVoronoi(List<Vector3> positions)
     {
         area.SetBounds(positions.ToArray());
     }
+
 }

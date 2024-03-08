@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   preacher: {fileID: 8310099352421141609}
+  preacherKnob: {fileID: 6190124910859938750}
 --- !u!1 &2212868706912080574
 GameObject:
   m_ObjectHideFlags: 0
@@ -403,6 +404,7 @@ MonoBehaviour:
   inner: {fileID: 3517634222299383631}
   collider: {fileID: 3737594344888178204}
   preview: {fileID: 5935123128446074363}
+  area: {fileID: 4437201978909691213}
   ringMenu: {fileID: 3581378202853062811}
 --- !u!1 &5935123128446074363
 GameObject:
@@ -431,8 +433,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 5042320426012231297}
   m_Father: {fileID: 3578354255853806264}
@@ -895,7 +897,7 @@ SpriteShapeRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_MaskInteraction: 0
   m_ShapeTexture: {fileID: 2800000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
   m_Sprites:

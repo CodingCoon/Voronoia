@@ -1,3 +1,4 @@
+
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -63,4 +64,9 @@ public class PreacherArea : MonoBehaviour, IMouseListener
             influenceBounds.sortingOrder = 1;
         }
     }
+
+    public Vector2 ClosestPoint(Vector2 pos)
+    {
+        return collider.ClosestPoint(pos);
+    } 
 }

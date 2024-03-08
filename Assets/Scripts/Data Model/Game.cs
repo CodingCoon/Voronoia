@@ -52,10 +52,7 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) 
-        {
-            NextPhase();
-        }
+       
     }
 
     public void AddReligion(Religion religion)

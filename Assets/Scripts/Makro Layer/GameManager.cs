@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : Singleton<GameManager>
 {
     public bool IsTutorial { get; set; } = false;
+    public bool FadeOver { get; set; } = false;
+
     public bool tutorialHook;
 
 

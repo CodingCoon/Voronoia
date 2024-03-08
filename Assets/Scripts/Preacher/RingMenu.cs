@@ -40,14 +40,12 @@ public class RingMenu : MonoBehaviour
 
     private void StartSplit()
     {
-        print("Todo Split");
+        preacherKnob.StartDrag(PreacherKnob.PreviewType.SPLIT);
     }
 
     private void StartMove()
     {
-        preacherKnob.Start
-           
-        print("Todo Move");
+        preacherKnob.StartDrag(PreacherKnob.PreviewType.MOVE);
     }
 
     private void ImprovePower()

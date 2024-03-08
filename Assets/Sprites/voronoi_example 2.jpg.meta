@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b1f8ffb3b7923244f9ca0033c6b48941
+guid: 501d02f0894c78949b7836beb31d83f0
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8915701605547864929
-    second: Progress_Inner_0
+      213: -6288992669044063379
+    second: voronoi_example 2_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Progress_Inner_0
+      name: voronoi_example 2_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 185
-        height: 185
+        width: 1131
+        height: 1690
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: f9c80fd80a0154480800000000000000
-      internalID: -8915701605547864929
+      spriteID: d63c79eec7209b8a0800000000000000
+      internalID: -6288992669044063379
       vertices: []
       indices: 
       edges: []
@@ -156,8 +156,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      Progress_Inner_0: -8915701605547864929
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

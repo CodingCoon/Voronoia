@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PreacherKnob : MonoBehaviour, IMouseListener
@@ -12,8 +13,9 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
     [SerializeField] private SpriteRenderer inner;
     [SerializeField] private new CircleCollider2D collider;
     [SerializeField] private GameObject preview;
-    private bool dragged = false;
-    private bool isSplit = false;
+    [SerializeField] private PreacherArea area;
+
+    private PreviewType previewType = PreviewType.NONE;
 
     [SerializeField] private RingMenu ringMenu;
     private bool showsRing = false;
@@ -34,8 +36,35 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
     private void Update()
     {
         if (religion.IsAi) return;
+
+        if (Input.GetMouseButtonDown(0) && showsRing)
+        {
+            showsRing = false;
+            StartCoroutine(HideRing());
+        }
+        if (Input.GetMouseButtonDown(0) && previewType != PreviewType.NONE)
+        {
+            if (previewType == PreviewType.MOVE)
+            {
+                preacher.SetAction(new MoveAction(this, preview.transform.position));
+               
+            }
+            else if (previewType == PreviewType.SPLIT)
+            {
+                preacher.SetAction(new SplitAction(preacher, preview.transform.position));
+            }
+            else
+            {
+                throw new System.Exception("snh: " + previewType);
+            }
+            previewType = PreviewType.NONE;
+        }
+
         if (Input.GetMouseButtonDown(1))
         {
+            previewType = PreviewType.NONE;
+            HidePreview();
+
             if (showsRing)
             {
                 showsRing = false;
@@ -47,36 +76,22 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
                 StartCoroutine(ShowRing());
             }
         }
-        //    else
-        //    {
-        //        isSplit = Input.GetKey(KeyCode.D);
-        //        Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //        if (collider.OverlapPoint(worldPosition))
-        //        {
-        //            dragged = true;
-        //        }
-        //    }
-        //}
 
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    dragged = false;
-        //    if (isSplit)
-        //    {
-        //        preacher.SetAction(new SplitAction(preacher, preview.transform.position));
-        //    }
-        //    else
-        //    {
-        //        preacher.SetAction(new MoveAction(this, preview.transform.position));
-        //    }
-        //}
+        
+        if (previewType != PreviewType.NONE)
+        {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            preview.SetActive(true);
 
-        //if (dragged)
-        //{
-        //    Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //    preview.SetActive(true);
-        //    preview.transform.position = new Vector3(worldPosition.x, worldPosition.y, 0);
-        //}
+            Vector2 closestPoint = area.ClosestPoint(worldPosition);
+            preview.transform.position = new Vector3(closestPoint.x, closestPoint.y, 0);
+        }
+    }
+
+
+    internal void StartDrag(PreviewType type)
+    {
+        previewType = type;
     }
 
     private IEnumerator ShowRing()
@@ -125,7 +140,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
         }
     }
 
-    public void Hide()
+    public void HidePreview()
     {
         preview.SetActive(false);
     }
@@ -146,5 +161,10 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
         {
             inner.color = religion.Color;
         }
+    }
+
+    public enum PreviewType
+    {
+        NONE, MOVE, SPLIT
     }
 }
