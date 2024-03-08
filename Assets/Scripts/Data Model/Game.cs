@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,7 +14,8 @@ public class Game : MonoBehaviour
     private AbstractPhase currentPhase; 
     public PhaseType PhaseType { get; private set; }
     
-    
+    public GameState State { get; private set; }
+
     private Round curRound = null;
     public Round CurRound => curRound;
 
@@ -50,15 +52,39 @@ public class Game : MonoBehaviour
         currentPhase.OnStart();
     }
 
-    private void Update()
-    {
-       
-    }
-
     public void AddReligion(Religion religion)
     {
         //print("add " + religion.ReligionName);
         religions.Add(religion);
+    }
+
+    internal void RemoveReligion(Religion diedReligion)
+    {
+        print("Religion GameOver " + diedReligion);
+
+        religions.Add(diedReligion);
+        UpdateGameState();
+    }
+
+    private void UpdateGameState()
+    {
+        bool playerActive = false;
+        bool aiActive = false;
+
+        foreach (Religion religion in religions)
+        {
+            aiActive = aiActive || religion.IsAi;
+            playerActive = playerActive || religion.IsPlayer;
+        }
+
+        if (playerActive)
+        {
+            State = aiActive ? GameState.RUNNING : GameState.PLAYER_WON;
+        }
+        else
+        {
+            State = aiActive ? GameState.PLAYER_LOOSE : GameState.PLAYER_WON;
+        }
     }
 
     public List<Preacher> GetPreachers()
@@ -77,5 +103,19 @@ public class Game : MonoBehaviour
     public List<Religion> GetReligions()
     {
         return religions;
+    }
+
+    internal bool IsOver()
+    {
+        return State != GameState.RUNNING;
+    }
+
+ 
+    public enum GameState
+    {
+        RUNNING,
+        PLAYER_WON,
+        PLAYER_LOOSE,
+        DRAW
     }
 }

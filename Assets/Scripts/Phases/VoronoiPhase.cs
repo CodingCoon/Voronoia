@@ -15,14 +15,15 @@ public class VoronoiPhase : AbstractPhase
     public override void OnStart()
     {
         voronoi.MarkDirty();
+        StartCoroutine(Wait());
     }
 
     private IEnumerator Wait()
     {
-        yield return new WaitForSeconds(3f);
-        //game.NextRound();
+        // todo lass polygon für polygpn sich verändern
+        yield return new WaitForSeconds(0.2f);
+        game.NextPhase();
     }
-
 
     public override void OnEnd()
     {

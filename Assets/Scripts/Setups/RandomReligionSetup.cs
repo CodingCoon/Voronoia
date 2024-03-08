@@ -44,7 +44,7 @@ public class RandomReligionSetup : MonoBehaviour
             Religion religion = GameObject.Instantiate(religionPrefab, religionsFolder.transform);
             ITactic tactic = ChooseTactic(i, religion);
 
-            religion.Setup(religionsNames[i% religionsNames.Count], religionsColors[i % religionsColors.Count], tactic);
+            religion.Setup(religionsNames[i% religionsNames.Count], religionsColors[i % religionsColors.Count], tactic, 100);
             religion.name = religionsNames[i % religionsNames.Count];
             religion.AddPreacher(point);
             game.AddReligion(religion);

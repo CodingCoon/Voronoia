@@ -13,11 +13,15 @@ public class TutorialHelper : MonoBehaviour
             if (item.IsPlayer)
             {
                 Preacher p = item.GetPreachers().First();
-                print(p.HasAction());
                 return p.HasAction();
             }
         }
         return false;
+    }
+
+    public bool IsDeathPhase()
+    {
+        return game.PhaseType == PhaseType.DEATH;
     }
 
     public bool IsApplyPhase()
@@ -25,16 +29,13 @@ public class TutorialHelper : MonoBehaviour
         return game.PhaseType == PhaseType.APPLY;
     }
 
-
-    // Use this for initialization
-    void Start()
+    public bool IsEvaluationPhase()
     {
-
+        return game.PhaseType == PhaseType.EVALUATION;
     }
 
-    // Update is called once per frame
-    void Update()
+    public bool IsActionPhase()
     {
-
+        return game.PhaseType == PhaseType.ACTION;
     }
 }

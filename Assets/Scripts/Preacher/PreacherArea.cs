@@ -1,4 +1,5 @@
 
+using System;
 using UnityEngine;
 using UnityEngine.U2D;
 
@@ -11,7 +12,9 @@ public class PreacherArea : MonoBehaviour, IMouseListener
     [SerializeField] private PreacherKnob knob;
 
     private IReligion religion;
-    private Vector3[] points; 
+    private Vector3[] points;
+
+    private bool dissolving = false;
 
     public void Setup(IReligion religion)
     {
@@ -51,6 +54,7 @@ public class PreacherArea : MonoBehaviour, IMouseListener
 
     public void OnHover(bool hovered)
     {
+        if (dissolving) return;
         if (hovered)
         {
             influenceBounds.startColor = Color.white;
@@ -68,5 +72,13 @@ public class PreacherArea : MonoBehaviour, IMouseListener
     public Vector2 ClosestPoint(Vector2 pos)
     {
         return collider.ClosestPoint(pos);
-    } 
+    }
+
+    internal void Dissolve(float progress)
+    {
+        dissolving = true;
+        influenceBounds.startColor = Color.Lerp(Color.black, Color.clear, progress);
+        influenceBounds.endColor = Color.Lerp(Color.black, Color.clear, progress);
+        areaRenderer.color = Color.Lerp(religion.Color, Color.clear, progress);
+    }
 }

@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class Preacher : MonoBehaviour, IPreacher, IVoronoiCellOwner
 {
-    private static readonly float PRICE = -40;
+    private static readonly int PRICE = -40;
 
     [SerializeField] private PreacherKnob knob;
     [SerializeField] private PreacherArea area;
+
+    private int roundsExist = 0;
 
     public float Power { get; private set; } = 1f;          // increases range to boundaries
     public float Influence { get; private set; } = 1f;      // increases income from area
@@ -35,11 +37,12 @@ public class Preacher : MonoBehaviour, IPreacher, IVoronoiCellOwner
     public void Reset()
     {
         positions.Clear();
-        action = null;
+        action = NoAction.NO_ACTION;
     }
 
     public void SetAction(IAction action)
     {
+        print("\t\t\t\t " + action.GetType());
         this.action = action;
     }
 
@@ -50,16 +53,22 @@ public class Preacher : MonoBehaviour, IPreacher, IVoronoiCellOwner
 
     public IEnumerator ApplyAction()
     {
-        positions.Add(new IncomePosition(action.Name, action.GetPrice()));
+        positions.Add(new IncomePosition(action.Name, action.GetPrice()));  
         IAction tmpAction = this.action;
         this.action = NoAction.NO_ACTION;
+        roundsExist++;
         yield return tmpAction.Execute();
     }
 
     public void Evaluate()
     {
         positions.Add(new IncomePosition("Income", GetIncome()));
-        positions.Add(new IncomePosition("Price", PRICE));
+        positions.Add(new IncomePosition("Price", GetPrice()));
+    }
+
+    public int GetPrice()
+    {
+        return PRICE * roundsExist;
     }
 
     public Vector2 GetPosition()
@@ -112,4 +121,10 @@ public class Preacher : MonoBehaviour, IPreacher, IVoronoiCellOwner
         area.SetBounds(positions.ToArray());
     }
 
+    internal void Dissolve(float progress)
+    {
+        float scale = 1 - Math.Clamp(progress, 0f, 1f);
+        transform.localScale = new Vector3(scale, scale);
+        area.Dissolve(progress);
+    }
 }

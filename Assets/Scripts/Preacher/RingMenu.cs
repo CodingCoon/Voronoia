@@ -8,8 +8,10 @@ public class RingMenu : MonoBehaviour
 
     internal void OnShow()
     {
+        print("OnShow " + TutorialManager.Instance.DisabledActionTypes.Count);
         if (GameManager.Instance.IsTutorial) 
         {
+
             List<MenuButton.ActionType> disabledActionTypes = TutorialManager.Instance.DisabledActionTypes;
             foreach (var item in GetComponentsInChildren<MenuButton>())
             {

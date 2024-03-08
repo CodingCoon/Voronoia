@@ -24,6 +24,11 @@ public class TutorialOverlayUI : MonoBehaviour
         nextButton.interactable = tutorialManager.HasNext();
     }
 
+    public void ToMenu()
+    {
+        GameManager.Instance.BackToMenu();
+    }
+
     public void NextTutorialHint()
     {
         tutorialManager.Next();

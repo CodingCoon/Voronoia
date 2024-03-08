@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Unity.Hierarchy;
 using UnityEngine;
 
 public class Religion : MonoBehaviour, IReligion
@@ -7,7 +9,7 @@ public class Religion : MonoBehaviour, IReligion
 
     public string Name {  get; private set; }
     public Color Color { get; private set; }
-    public float Faith { get; private set; } = 100;
+    public float Faith { get; private set; }
     public ITactic Tactic { get; private set; }
     public bool IsPlayer => Tactic == null;
     public bool IsAi => Tactic != null;
@@ -20,11 +22,12 @@ public class Religion : MonoBehaviour, IReligion
         return Name;
     }
 
-    public void Setup(string religionName, Color color, ITactic tactic)
+    public void Setup(string religionName, Color color, ITactic tactic, float money)
     {
         this.Name = religionName;
         this.Color = color;
         this.Tactic = tactic;
+        this.Faith = money;
     }
 
     public Preacher AddPreacher(Vector2 position)
@@ -59,4 +62,35 @@ public class Religion : MonoBehaviour, IReligion
         }
         print("\t--------------- " + Faith);
     }
+
+    internal Preacher ReleaseMostExpensiveLeader()
+    {
+        int highestPrice = 0;
+        Preacher mostExpensiveLeader = null;
+
+        foreach (Preacher p in preachers)
+        {
+            int curPrice = p.GetPrice();
+            if (mostExpensiveLeader == null || curPrice > highestPrice)
+            {
+                highestPrice = curPrice;
+                mostExpensiveLeader = p;
+            }
+        }
+
+        preachers.Remove(mostExpensiveLeader);
+        Faith = highestPrice;
+        return mostExpensiveLeader;
+    }
+
+    internal int GetLeaderCount()
+    {
+        return preachers.Count;
+    }
+
+    internal void GameOver()
+    {
+        Game.INSTANCE.RemoveReligion(this);
+        GameObject.Destroy(this.gameObject, 0f);
+    } 
 }

@@ -6,7 +6,7 @@
     APPLY,
     VORONOI,
     EVALUATION,
+    DEATH,
 
-
-    END
+    GAME_OVER,
 }

@@ -156,7 +156,8 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      voronoi_example_0: 1596038421821838100
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

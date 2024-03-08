@@ -6,7 +6,10 @@ public abstract class AbstractPhase : MonoBehaviour
 
     public abstract void OnStart();
 
-    public abstract void OnEnd();
+    public virtual void OnEnd()
+    {
+
+    }
 
     public abstract AbstractPhase GetNextPhase();
 }

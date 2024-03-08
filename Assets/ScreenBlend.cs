@@ -7,12 +7,19 @@ using UnityEngine.U2D;
 
 public class ScreenBlend : MonoBehaviour
 {
+    public static ScreenBlend INSTANCE { get; private set; } 
+
     [Range(0.1f, 5f)][SerializeField] private float duration;
     [SerializeField] private Gradient colorGradient;
     [SerializeField] private List<SpriteShapeRenderer> cells;
 
     private bool initialOn; 
-    private bool shown; 
+    private bool shown;
+
+    private void Awake()
+    {
+        INSTANCE = this;
+    }
 
     private void Start()
     {

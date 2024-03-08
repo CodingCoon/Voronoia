@@ -15,9 +15,10 @@ public abstract class AbstractSetup : MonoBehaviour
             Vector2 point = GetPoint(i);
             Religion religion = GameObject.Instantiate(religionPrefab, religionsFolder.transform);
             ITactic tactic = GetTactic(i, religion);
-
+            float money = GetMoney(i);
             string name = GetName(i);
-            religion.Setup(name, GetColor(i), tactic);
+
+            religion.Setup(name, GetColor(i), tactic, money);
             religion.name = name;
             religion.AddPreacher(point);
             game.AddReligion(religion);
@@ -31,6 +32,11 @@ public abstract class AbstractSetup : MonoBehaviour
 
     protected abstract Color GetColor(int i);
     protected abstract Vector2 GetPoint(int i);
+
+    protected virtual float GetMoney(int i)
+    { 
+        return 100; 
+    }   
 
     public static Color FromHex(string hex)
     {

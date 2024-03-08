@@ -30,14 +30,11 @@ public class StartPhase : AbstractPhase
     private IEnumerator HideBlend()
     {
 
-        // todo Hide Blend
         yield return null;
+        game.NextPhase();
     }
 
-    public override void OnEnd()
-    {
-
-    }
+    public override void OnEnd() {}
 
     public override AbstractPhase GetNextPhase()
     {

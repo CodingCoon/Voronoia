@@ -22,6 +22,7 @@ public class ApplyPhase : AbstractPhase
         {
             yield return StartCoroutine(preacher.ApplyAction());
         }
+        game.NextPhase();
     }
 
     public override void OnEnd()

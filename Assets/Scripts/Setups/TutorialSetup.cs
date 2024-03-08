@@ -31,9 +31,8 @@ public class TutorialSetup : AbstractSetup
 
     protected override ITactic GetTactic(int i, Religion religion)
     {
-        if (i == 0) return null;
-        if (i % 2 == 0) return new RiseInfluenceTactic(religion);
-        return new RisePowerTactic(religion);
+        if (i == 0) return null; // player
+        return new DoNothingTactic(religion);
     }
 
     protected override string GetName(int i)
@@ -49,5 +48,10 @@ public class TutorialSetup : AbstractSetup
     protected override Vector2 GetPoint(int i)
     {
         return positions[i];
+    }
+
+    protected override float GetMoney(int i)
+    {
+        return i == 1 ? -1000 : base.GetMoney(i); 
     }
 }

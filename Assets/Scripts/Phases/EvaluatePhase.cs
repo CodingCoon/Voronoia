@@ -2,7 +2,7 @@
 
 public class EvaluatePhase : AbstractPhase
 {
-    [SerializeField] private ActionPhase actionPhase;
+    [SerializeField] private DeathPhase deathPhase;
     [SerializeField] private Game game;
 
     public override PhaseType GetPhaseType()
@@ -16,12 +16,8 @@ public class EvaluatePhase : AbstractPhase
         game.GetReligions().ForEach(r => r.UpdateIncome());
     }
 
-    public override void OnEnd()
-    {
-    }
-
     public override AbstractPhase GetNextPhase()
     {
-        return actionPhase;
+        return deathPhase;
     }
 }
