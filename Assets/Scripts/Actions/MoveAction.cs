@@ -19,6 +19,7 @@ public class MoveAction : IAction, IPlannedAction
 
     public IEnumerator Execute()
     {
+        preacherKnob.ActivateTrail(true);
         float progress = 0f;
         float elapsedTime = 0f;
         Vector3 startPos = preacherKnob.transform.position;
@@ -34,6 +35,7 @@ public class MoveAction : IAction, IPlannedAction
         }
 
         preacherKnob.HidePreview();
+        preacherKnob.ActivateTrail(false);
     }
 
     public float GetPrice()

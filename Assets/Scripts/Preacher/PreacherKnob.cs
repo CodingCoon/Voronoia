@@ -14,6 +14,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
     [SerializeField] private new CircleCollider2D collider;
     [SerializeField] private GameObject preview;
     [SerializeField] private PreacherArea area;
+    [SerializeField] private TrailRenderer trail;
 
     private PreviewType previewType = PreviewType.NONE;
 
@@ -31,6 +32,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
     private void Awake()
     {
         ringMenu.transform.localScale = Vector3.zero;
+        ActivateTrail(false);
     }
 
     private void Update()
@@ -162,6 +164,11 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
             LeaderSelectionManager.INSTANCE.UpdateLeader(null);
             inner.color = religion.Color;
         }
+    }
+
+    public void ActivateTrail(bool trail)
+    {
+        this.trail.enabled = trail; 
     }
 
     public enum PreviewType

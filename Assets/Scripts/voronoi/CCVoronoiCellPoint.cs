@@ -1,13 +1,14 @@
 ﻿using System;
+using UnityEngine;
 
 public class CCVoronoiCellPoint : IComparable<CCVoronoiCellPoint>
 {
-    public CCIntersection Intersection { get; private set; }
+    public Vector2 Point { get; private set; }
     public float Angle { get; private set; }
 
-    public CCVoronoiCellPoint(CCIntersection intersection, float angle)
+    public CCVoronoiCellPoint(Vector2 point, float angle)
     {
-        Intersection = intersection;
+        Point = point;
         Angle = angle;
     }
 

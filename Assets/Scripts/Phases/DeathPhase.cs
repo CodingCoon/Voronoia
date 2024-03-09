@@ -16,30 +16,30 @@ public class DeathPhase : AbstractPhase
 
     public override void OnStart()
     {
-        List<Leader> removedPreacher = new List<Leader>();
+        List<Leader> removedLeader = new List<Leader>();
 
-        game.GetVoronations().ForEach(religion =>
+        game.GetVoronations().ForEach(voronation =>
         {
-            if (religion.Money <= 0)
+            if (voronation.Money <= 0)
             {
-                removedPreacher.Add(religion.ReleaseMostExpensiveLeader());             
+                removedLeader.Add(voronation.ReleaseMostExpensiveLeader());             
             }
         });
 
-        StartCoroutine(RemoveLands(removedPreacher));
+        StartCoroutine(RemoveLands(removedLeader));
     }
     
-    private IEnumerator RemoveLands(List<Leader> removedPreacher)
+    private IEnumerator RemoveLands(List<Leader> removedLeader)
     {
-        foreach (Leader preacher in removedPreacher)
+        foreach (Leader Leader in removedLeader)
         {
-            yield return StartCoroutine(RemoveLand(preacher));
+            yield return StartCoroutine(RemoveLand(Leader));
         }
         game.NextPhase();
     }
 
 
-    private IEnumerator RemoveLand(Leader preacher)
+    private IEnumerator RemoveLand(Leader leader)
     {
         float duration = 1;
         float timeElapsed = 0;
@@ -47,7 +47,7 @@ public class DeathPhase : AbstractPhase
         while (timeElapsed < duration)
         {
             timeElapsed += Time.deltaTime;
-            preacher.Dissolve(timeElapsed / duration);
+            leader.Dissolve(timeElapsed / duration);
             yield return null;
         }
     }

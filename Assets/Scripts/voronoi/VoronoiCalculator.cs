@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class VoronoiCalculator : MonoBehaviour
@@ -39,6 +41,7 @@ public class VoronoiCalculator : MonoBehaviour
         blIntersection = new CCIntersection(bottomLine, leftLine, bl);
     }
 
+    IVoronoiCellOwner first;
 
     public List<CCVoronoiCell> CreateCells(List<IVoronoiCellOwner> sites)
     {
@@ -51,6 +54,7 @@ public class VoronoiCalculator : MonoBehaviour
         if (sites.Count == 1) return new List<CCVoronoiCell>() { CreateFullCell(sites[0]) };
 
         List<CCVoronoiCell> voronoiCells = new List<CCVoronoiCell> ();
+        first = sites[0];
 
         // 1. Bilde Punkte zwischen allen Preachern
         List<CCTouchPoint> tmpTouchPoints = new List<CCTouchPoint>();
@@ -81,21 +85,37 @@ public class VoronoiCalculator : MonoBehaviour
             //print("--- " + site + " after cleanup");
             //foreach (var item in tmpIntersections) print("\t\t  " + item.Point);
 
-            // TODO  5. Entferne Duplikate        
-
+            // 5. Entferne Duplikate        
+            List<Vector2> points = new List<Vector2>();
+            tmpIntersections.ForEach(intersection => 
+            {
+                bool distinct = true;
+                foreach (Vector2 point in points)
+                {
+//                    print(intersection.Point + " X  " + point + " = " + Vector2.Distance(intersection.Point, point) + " (" + (Vector2.Distance(intersection.Point, point) == 0)  + ")");
+                    if (Vector2.Distance(intersection.Point, point) < 0.01f ) //< 0.1f)
+                    {
+                        distinct = false;
+                        break;
+                    }
+                }
+                if (distinct) points.Add(intersection.Point);
+            });
+            List<Vector2> distinctPoints = points.Distinct().ToList();
 
             // 6. Sortiere die Punkte nach ihrem Winkel 
             List<CCVoronoiCellPoint> cellPoints = new List<CCVoronoiCellPoint>();
-            tmpIntersections.ForEach(intersection =>
+            distinctPoints.ForEach(point =>
             {
-                float angle = Mathf.Atan2(intersection.Point.y - site.GetPosition().y,
-                                          intersection.Point.x - site.GetPosition().x);
-                CCVoronoiCellPoint cellPoint = new CCVoronoiCellPoint(intersection, angle);
+                float angle = Mathf.Atan2(point.y - site.GetPosition().y,
+                                          point.x - site.GetPosition().x);
+                CCVoronoiCellPoint cellPoint = new CCVoronoiCellPoint(point, angle);
                 cellPoints.Add(cellPoint);
             });
+            
             cellPoints.Sort();
             //print("--- " + site + " after sort");
-            //foreach (var item in cellPoints) print("\t\t  " + item.Intersection.Point);
+            //foreach (var item in cellPoints) print("\t\t  " + item.Point);
 
             // 7. Bilde die VoronoiZelle
             voronoiCells.Add(new CCVoronoiCell(site, cellPoints));
@@ -104,21 +124,30 @@ public class VoronoiCalculator : MonoBehaviour
         return voronoiCells;
     }
 
-
+    // Entfernt alle Schnittpunkte, die nicht relevant sind, weil sie hinter einer touchLine liegen
     private void CleanupIntersections(IVoronoiCellOwner site, List<CCTouchLine> touchLines, List<CCIntersection> tmpIntersections)
     {
         List<CCIntersection> workingCopy = new List<CCIntersection>(tmpIntersections);
 
-        foreach (var intersection in workingCopy)
+        foreach (CCIntersection intersection in workingCopy)
         {
+            // Bilde eine Linie von Hauptpunkt zum Schnittpunkt
             CCTouchLine siteToIntersection = new CCTouchLine(null, site.GetPosition(), intersection.Point);
 
             // Wenn ich eine Linie finde, die nicht die zur Intersection beitragende Linie ist und die ich schneide
             // von Site zur Intersection, dann liegt diese Intersection hinter relevanten Linien und kann verworfen werden
+            // Aber achtung: Ein Schnittpunkt kann der Schnittpunkt verschiedener Linien sein
             foreach (CCTouchLine line in touchLines)
             {
-                if (intersection.FirstLine == line || intersection.SecondLine == line) continue;
-                if (line.IsInnerIntersection(siteToIntersection)) tmpIntersections.Remove(intersection);
+                Vector2? point = siteToIntersection.CalcInnerIntersection(line);
+                //if (point == null) print("\t\t Hit erst dahinter, kann bleiben");
+                //if (point != null && point == intersection.Point) print("\t\t Hit an der selben Stelle, also okay");
+                if (point != null && point != intersection.Point)
+                {
+                    tmpIntersections.Remove(intersection);
+                }
+                //if (intersection.FirstLine == line || intersection.SecondLine == line) continue;
+                //if (line.IsInnerIntersection(siteToIntersection)) tmpIntersections.Remove(intersection);
             }
 
             if (intersection.FirstLine != topLine && intersection.SecondLine != topLine && 
@@ -134,33 +163,35 @@ public class VoronoiCalculator : MonoBehaviour
 
     private void SetupIntersections(List<CCTouchLine> touchLines, List<CCIntersection> intersections)
     {
-        Vector2? intersection = null;
         HashSet<Vector2> intersectionPoints = new HashSet<Vector2> ();  // todo duplikate entfernen
 
         for (int i = 0; i < touchLines.Count; i++)
         {
             for (int j = i + 1; j < touchLines.Count; j++)
             {
-                intersection = touchLines[i].CalcIntersection(touchLines[j]);
-                if (intersection != null) intersections.Add(new CCIntersection(touchLines[i], touchLines[j], (Vector2) intersection));
+                CheckIntersection(intersections, touchLines[i], touchLines[j]);
             }
 
-            intersection = touchLines[i].CalcIntersection(topLine);                 // TODO idealerweise entstehen garnicht erst welche auserhalb
-            if (intersection != null) intersections.Add(new CCIntersection(touchLines[i], topLine, (Vector2)intersection));
-
-            intersection = touchLines[i].CalcIntersection(rightLine);
-            if (intersection != null) intersections.Add(new CCIntersection(touchLines[i], rightLine, (Vector2)intersection));
-
-            intersection = touchLines[i].CalcIntersection(bottomLine);
-            if (intersection != null) intersections.Add(new CCIntersection(touchLines[i], bottomLine, (Vector2)intersection));
-
-            intersection = touchLines[i].CalcIntersection(leftLine);
-            if (intersection != null) intersections.Add(new CCIntersection(touchLines[i], leftLine, (Vector2)intersection));
+            CheckIntersection(intersections, touchLines[i], topLine);
+            CheckIntersection(intersections, touchLines[i], rightLine);
+            CheckIntersection(intersections, touchLines[i], bottomLine);
+            CheckIntersection(intersections, touchLines[i], leftLine);
 
             intersections.Add(brIntersection);
             intersections.Add(blIntersection);
             intersections.Add(trIntersection);
             intersections.Add(tlIntersection);
+        }
+    }
+
+    private void CheckIntersection(List<CCIntersection> intersections, CCTouchLine first, CCTouchLine second)
+    {
+        Vector2? point = first.CalcIntersection(second);
+
+        if (point != null)
+        {
+            var intersection = new CCIntersection(first, second, (Vector2) point);
+            intersections.Add(intersection);
         }
     }
 
@@ -257,25 +288,34 @@ public class VoronoiCalculator : MonoBehaviour
         Gizmos.color = Color.green;
         foreach (CCTouchPoint point in touchPoints)
         {
-            Gizmos.DrawSphere(point.Center, 0.1f);
+            if (point.First == first || point.Second == first)
+            {
+                Gizmos.DrawSphere(point.Center, 0.1f);
+            }
         }
 
         Gizmos.color = Color.black;
         foreach (CCTouchLine line in touchLines)
         {
-            Gizmos.DrawLine(line.FirstPoint, line.SecondPoint);
+            if (line.Owner.First == first || line.Owner.Second == first)
+            {
+                Gizmos.DrawLine(line.FirstPoint, line.SecondPoint);
+            }
         }
 
         Gizmos.color = Color.cyan;
         foreach (CCIntersection point in allIntersections)
         {
-            Gizmos.DrawSphere(point.Point, 0.15f);
+            if (point.BelongsTo(first))
+            { 
+                Gizmos.DrawSphere(point.Point, 0.15f);
+            }
         }
 
         Gizmos.color = Color.yellow;
         foreach (CCIntersection point in reducedIntersections)
         {
-            Gizmos.DrawSphere(point.Point, 0.1f);
+            // Gizmos.DrawSphere(point.Point, 0.1f);
         }
     }
 

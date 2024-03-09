@@ -13,4 +13,13 @@ public class CCIntersection
         Point = intersection;
     }
 
+    public bool BelongsTo(IVoronoiCellOwner owner)
+    {
+        return  (FirstLine.Owner != null && (FirstLine.Owner.First == owner
+                                         || FirstLine.Owner.Second == owner))
+            || (SecondLine.Owner != null && (SecondLine.Owner.First == owner 
+                                         || SecondLine.Owner.Second == owner));
+
+    }
+
 }

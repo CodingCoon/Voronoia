@@ -26,10 +26,10 @@ public class CCVoronoiCell
         Vector2? lastPoint = null;
         points.ForEach(point =>
         {
-            if (lastPoint == null || !lastPoint.Equals(point.Intersection.Point))
+            if (lastPoint == null || !lastPoint.Equals(point.Point))
             {
-                lastPoint = point.Intersection.Point;
-                Points.Add(point.Intersection.Point);
+                lastPoint = point.Point;
+                Points.Add(point.Point);
             }
         });
     }

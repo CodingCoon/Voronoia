@@ -1757,7 +1757,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40519fe82ba9b544995589bd4ee8d676, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tutorialHook: 1
+  tutorialHook: 0
 --- !u!4 &804029393
 Transform:
   m_ObjectHideFlags: 0

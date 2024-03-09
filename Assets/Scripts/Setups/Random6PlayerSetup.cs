@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Random6PlayerSetup : AbstractSetup
 {
-    private static readonly List<string> PLAYER_NAMES = new List<string>{
+    private static readonly List<string> NAMES = new List<string>{
         "Porter", 
         "Wit", 
         "Stout", 
@@ -11,7 +11,7 @@ public class Random6PlayerSetup : AbstractSetup
         "Lager",
         "Saison"};
 
-    private static readonly List<Color> PLAYER_COLORS = new List<Color>() {
+    private static readonly List<Color> COLORS = new List<Color>() {
         FromHex("64766A"),  // Grün
         FromHex("F4F2F3"),  // Eierschale
         FromHex("C0A9BD"),  // Rosa
@@ -33,16 +33,21 @@ public class Random6PlayerSetup : AbstractSetup
 
     protected override string GetName(int i)
     {
-        return PLAYER_NAMES[i];    
+        return NAMES[i];    
     }
 
     protected override Color GetColor(int i)
     {
-        return PLAYER_COLORS[i];
+        return COLORS[i];
     }
 
     protected override Vector2 GetPoint(int i)
     {
-        return map.RandomPoint();
+        float degree = 60 * i;
+        float angle = Mathf.PI * degree / 180;
+        float distance = 4f;
+
+        Vector2 point = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+        return point * distance;
     }
 }

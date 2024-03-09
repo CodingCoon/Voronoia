@@ -20,6 +20,7 @@ public class SoundManager : MonoBehaviour
 
     private void Update()
     {
+        return; // todo later
         if (!musicSource.isPlaying)
         {
             PlayMusic();
