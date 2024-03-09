@@ -1,12 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class TutorialOverlayUI : MonoBehaviour
 {
-    [SerializeField] private Button nextButton;
+    [SerializeField] private Button skipButton;
+    [SerializeField] private Button menuButton;
     [SerializeField] private TextMeshProUGUI tutorialText;
 
     [SerializeField] private TutorialManager tutorialManager;
@@ -21,7 +20,13 @@ public class TutorialOverlayUI : MonoBehaviour
     {
         tutorialText.text = tutorialManager.GetHint();
         tutorialText.gameObject.SetActive(tutorialText.text.Length > 0);
-        nextButton.interactable = tutorialManager.HasNext();
+        skipButton.gameObject.SetActive(tutorialManager.HasNext());
+        menuButton.gameObject.SetActive(tutorialManager.TutorialDone);
+
+        if (! GameManager.Instance.IsTutorial)
+        {
+            GameObject.Destroy(gameObject, 0f);
+        }
     }
 
     public void ToMenu()

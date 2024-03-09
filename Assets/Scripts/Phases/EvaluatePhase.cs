@@ -13,7 +13,7 @@ public class EvaluatePhase : AbstractPhase
     public override void OnStart()
     {
         game.GetPreachers().ForEach(p => p.Evaluate());
-        game.GetReligions().ForEach(r => r.UpdateIncome());
+        game.GetVoronations().ForEach(v => v.UpdateIncome());
     }
 
     public override AbstractPhase GetNextPhase()

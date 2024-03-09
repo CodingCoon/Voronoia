@@ -1,14 +1,14 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RingMenu : MonoBehaviour
 {
-    [SerializeField] private Preacher preacher;
+    [SerializeField] private Leader preacher;
     [SerializeField] private PreacherKnob preacherKnob;
 
     internal void OnShow()
     {
-        print("OnShow " + TutorialManager.Instance.DisabledActionTypes.Count);
         if (GameManager.Instance.IsTutorial) 
         {
 
@@ -52,13 +52,35 @@ public class RingMenu : MonoBehaviour
 
     private void ImprovePower()
     {
-        print("Improve Power");
         preacher.SetAction(new ImprovePowerAction(preacher));
     }
 
     private void ImproveInfluence()
     {
-        print("Improve Influence");
-        preacher.SetAction(new ImproveInfluenceAction(preacher));
+        preacher.SetAction(new IncreaseIncomeAction(preacher));
     }
+
+    internal void Plan(bool hovered, MenuButton.ActionType actionType)
+    {
+        if (hovered)
+        {
+            PlannedActionController.INSTANCE.Plan(CreatePlannedAction(actionType));
+        }
+        else
+        {
+            PlannedActionController.INSTANCE.UnPlan();
+        }
+    }
+
+    private IPlannedAction CreatePlannedAction(MenuButton.ActionType actionType)
+    {
+        switch (actionType)
+        {
+            case MenuButton.ActionType.MOVE: return new MoveAction(preacherKnob, preacher.transform.position);
+            case MenuButton.ActionType.SPLIT: return new SplitAction(preacher, preacher.transform.position);
+            case MenuButton.ActionType.IMPROVE_INFLUENCE: return new IncreaseIncomeAction (preacher);
+            case MenuButton.ActionType.IMPROVE_POWER: return new ImprovePowerAction(preacher);
+        }
+        return null;
+    } 
 }

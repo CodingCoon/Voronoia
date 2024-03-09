@@ -29,7 +29,7 @@ public class TutorialSetup : AbstractSetup
         return 4;
     }
 
-    protected override ITactic GetTactic(int i, Religion religion)
+    protected override ITactic GetTactic(int i, Voronation religion)
     {
         if (i == 0) return null; // player
         return new DoNothingTactic(religion);
@@ -52,6 +52,6 @@ public class TutorialSetup : AbstractSetup
 
     protected override float GetMoney(int i)
     {
-        return i == 1 ? -1000 : base.GetMoney(i); 
+        return i == 1 ? 0 : base.GetMoney(i); 
     }
 }

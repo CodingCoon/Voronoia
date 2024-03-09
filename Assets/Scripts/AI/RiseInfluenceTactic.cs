@@ -2,12 +2,12 @@
 {
     private float blockedMoney = 0;
 
-    public RiseInfluenceTactic(IReligion religion) : base(religion) {}
+    public RiseInfluenceTactic(IVoronation religion) : base(religion) {}
 
-    public override void CreateAction(IPreacher preacher)
+    public override void CreateAction(ILeader preacher)
     {
-        IAction action = new ImproveInfluenceAction(preacher);
-        if (action.GetPrice() <= religion.Faith - blockedMoney) 
+        IAction action = new IncreaseIncomeAction(preacher);
+        if (action.GetPrice() <= religion.Money - blockedMoney) 
         {
             preacher.SetAction(action);
             blockedMoney += action.GetPrice();

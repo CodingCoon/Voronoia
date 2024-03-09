@@ -7,4 +7,7 @@ public interface IAction
     IEnumerator Execute();
 
     float GetPrice();
+
+    string GetDetailedInfos();
+
 }

@@ -6,7 +6,7 @@ public class Game : MonoBehaviour
 {
     public static Game INSTANCE;
 
-    private List<Religion> religions = new List<Religion>();
+    private List<Voronation> religions = new List<Voronation>();
     private List<Round> rounds = new List<Round>();
 
 
@@ -52,13 +52,13 @@ public class Game : MonoBehaviour
         currentPhase.OnStart();
     }
 
-    public void AddReligion(Religion religion)
+    public void AddReligion(Voronation religion)
     {
         //print("add " + religion.ReligionName);
         religions.Add(religion);
     }
 
-    internal void RemoveReligion(Religion diedReligion)
+    internal void RemoveReligion(Voronation diedReligion)
     {
         print("Religion GameOver " + diedReligion);
 
@@ -71,7 +71,7 @@ public class Game : MonoBehaviour
         bool playerActive = false;
         bool aiActive = false;
 
-        foreach (Religion religion in religions)
+        foreach (Voronation religion in religions)
         {
             aiActive = aiActive || religion.IsAi;
             playerActive = playerActive || religion.IsPlayer;
@@ -87,12 +87,12 @@ public class Game : MonoBehaviour
         }
     }
 
-    public List<Preacher> GetPreachers()
+    public List<Leader> GetPreachers()
     {
-        List<Preacher> preachers = new List<Preacher>();
-        foreach (Religion religion in religions)
+        List<Leader> preachers = new List<Leader>();
+        foreach (Voronation religion in religions)
         {
-            foreach (Preacher preacher in religion.GetPreachers())
+            foreach (Leader preacher in religion.GetLeaders())
             {
                 preachers.Add(preacher);
             }
@@ -100,7 +100,7 @@ public class Game : MonoBehaviour
         return preachers;
     }
 
-    public List<Religion> GetReligions()
+    public List<Voronation> GetVoronations()
     {
         return religions;
     }
@@ -110,7 +110,11 @@ public class Game : MonoBehaviour
         return State != GameState.RUNNING;
     }
 
- 
+    internal Voronation GetHumanPlayer()
+    {
+        return religions[0]; // todo sollte hinhauen, kann man aber sicher auch lazy cachen
+    }
+
     public enum GameState
     {
         RUNNING,

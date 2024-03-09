@@ -1,6 +1,6 @@
 ﻿public interface ITactic
 {
-    void CreateAction(IPreacher preacher);
+    void CreateAction(ILeader preacher);
 
     void Clear();
 }

@@ -11,9 +11,9 @@ public class TutorialManager : MonoBehaviour
     public static TutorialManager Instance { get; private set; }
 
     private static Action NO_OP = () => { };
-    private static string DESCRIPTION_1 = "You play Voronation, a strategy game, where you control leaders to claim regions on a square map.";
-    private static string DESCRIPTION_2 = "This pulsing dot is you leader and the area around him you land. In a Voronation every land is formed around your leader. Every location in that land has a shorter range to you leader than to any other leader. Your target it to exterminate any other nation.";
-    private static string DESCRIPTION_3 = "You can move your leader to effect you land from another position. Click right on your leader and move him to another position.";
+    private static string DESCRIPTION_1 = "You play Voronation, a strategy game, where you control leaders to claim regions on a square map. Your target it to exterminate any other nation.";
+    private static string DESCRIPTION_2 = "This pulsing dot is your leader. In a Voronation every land is formed around a leader. Every location in that land has a shorter range to that leader than to any other leader. ";
+    private static string DESCRIPTION_3 = "You can move your leader to affect other land positions. Click right on your leader and move him to another position.";
     private static string DESCRIPTION_4 = "Click on 'Apply actions' to execute the action.";
 
     private static string DESCRIPTION_5 = "Now all leaders are doing their action...";

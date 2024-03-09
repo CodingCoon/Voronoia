@@ -1,5 +1,8 @@
-﻿public class IncomePosition 
+﻿using Microsoft.Unity.VisualStudio.Editor;
+
+public class IncomePosition 
 {
+    public Image Image { get; private set; }
     public string Name { get; private set; }
     public float Value { get; private set; }
 
@@ -7,6 +10,7 @@
     {
         this.Name = name;
         this.Value = value;
+//        this.Image = Image; 
     }
 
     public override string ToString()

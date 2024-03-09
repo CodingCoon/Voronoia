@@ -24,7 +24,7 @@ public class Random6PlayerSetup : AbstractSetup
         return 6;
     }
 
-    protected override ITactic GetTactic(int i, Religion religion)
+    protected override ITactic GetTactic(int i, Voronation religion)
     {
         if (i == 0) return null;
         if (i % 2 == 0) return new RiseInfluenceTactic(religion);

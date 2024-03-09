@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class DoNothingTactic : AbstractTactic
 {
-    public DoNothingTactic(IReligion religion) : base(religion) { }
+    public DoNothingTactic(IVoronation religion) : base(religion) { }
 
-    public override void CreateAction(IPreacher preacher)
+    public override void CreateAction(ILeader preacher)
     {
         preacher.SetAction(NoAction.NO_ACTION);
     }

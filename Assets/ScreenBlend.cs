@@ -101,21 +101,4 @@ public class ScreenBlend : MonoBehaviour
             yield return null;
         }
     }
-
-    private void OnGUI()
-    {
-        if (GUILayout.Button("Show"))
-        {
-            if (shown)
-            {
-                shown = false;
-                StartCoroutine(Hide());
-            }
-            else
-            {
-                shown = true;
-                StartCoroutine(Show(() => { }));
-            }
-        }
-    }
 }

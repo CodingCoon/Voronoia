@@ -8,11 +8,11 @@ public class TutorialHelper : MonoBehaviour
     public bool PlayersLeaderHasAction()
     {
         // todo etwas sehr aufwendig jeden frame
-        foreach (var item in game.GetReligions())
+        foreach (var item in game.GetVoronations())
         {
             if (item.IsPlayer)
             {
-                Preacher p = item.GetPreachers().First();
+                Leader p = item.GetLeaders().First();
                 return p.HasAction();
             }
         }

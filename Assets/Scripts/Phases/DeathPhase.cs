@@ -16,11 +16,11 @@ public class DeathPhase : AbstractPhase
 
     public override void OnStart()
     {
-        List<Preacher> removedPreacher = new List<Preacher>();
+        List<Leader> removedPreacher = new List<Leader>();
 
-        game.GetReligions().ForEach(religion =>
+        game.GetVoronations().ForEach(religion =>
         {
-            if (religion.Faith <= 0)
+            if (religion.Money <= 0)
             {
                 removedPreacher.Add(religion.ReleaseMostExpensiveLeader());             
             }
@@ -29,9 +29,9 @@ public class DeathPhase : AbstractPhase
         StartCoroutine(RemoveLands(removedPreacher));
     }
     
-    private IEnumerator RemoveLands(List<Preacher> removedPreacher)
+    private IEnumerator RemoveLands(List<Leader> removedPreacher)
     {
-        foreach (Preacher preacher in removedPreacher)
+        foreach (Leader preacher in removedPreacher)
         {
             yield return StartCoroutine(RemoveLand(preacher));
         }
@@ -39,7 +39,7 @@ public class DeathPhase : AbstractPhase
     }
 
 
-    private IEnumerator RemoveLand(Preacher preacher)
+    private IEnumerator RemoveLand(Leader preacher)
     {
         float duration = 1;
         float timeElapsed = 0;
@@ -54,7 +54,7 @@ public class DeathPhase : AbstractPhase
 
     public override void OnEnd()
     {
-        List<Religion> allReligions = new List<Religion>(game.GetReligions());
+        List<Voronation> allReligions = new List<Voronation>(game.GetVoronations());
         allReligions.ForEach(religion =>
         {
             if (religion.GetLeaderCount() == 0)

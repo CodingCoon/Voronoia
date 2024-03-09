@@ -1,16 +1,16 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class SplitAction : IAction
+public class SplitAction : IAction, IPlannedAction
 {
     public string Name => "Split";
 
     private static readonly float SPLIT_PRICE = 25f;
     private static readonly float DURATION = 1f;
-    private readonly Preacher preacher;
+    private readonly Leader preacher;
     private readonly Vector2 newPosition;
 
-    public SplitAction(Preacher preacher, Vector2 newPosition)
+    public SplitAction(Leader preacher, Vector2 newPosition)
     {
         this.preacher = preacher;
         this.newPosition = newPosition;
@@ -37,5 +37,12 @@ public class SplitAction : IAction
     public float GetPrice()
     {
         return -SPLIT_PRICE;
+    }
+
+    public void UpdateTarget(Vector2 position) { /* Doesnt matter */}
+
+    public string GetDetailedInfos()
+    {
+        return "Split and move new created leader.";
     }
 }

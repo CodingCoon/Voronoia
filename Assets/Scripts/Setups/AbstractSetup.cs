@@ -5,7 +5,7 @@ public abstract class AbstractSetup : MonoBehaviour
 {
     [SerializeField] protected Map map;
     [SerializeField] private Game game;
-    [SerializeField] private Religion religionPrefab;
+    [SerializeField] private Voronation religionPrefab;
     [SerializeField] private GameObject religionsFolder;
 
     public void GeneratePlayers()
@@ -13,7 +13,7 @@ public abstract class AbstractSetup : MonoBehaviour
         for (int i = 0; i < GetPlayerCount(); i++)
         {
             Vector2 point = GetPoint(i);
-            Religion religion = GameObject.Instantiate(religionPrefab, religionsFolder.transform);
+            Voronation religion = GameObject.Instantiate(religionPrefab, religionsFolder.transform);
             ITactic tactic = GetTactic(i, religion);
             float money = GetMoney(i);
             string name = GetName(i);
@@ -26,7 +26,7 @@ public abstract class AbstractSetup : MonoBehaviour
     }
 
     protected abstract int GetPlayerCount();
-    protected abstract ITactic GetTactic(int i, Religion religion);
+    protected abstract ITactic GetTactic(int i, Voronation religion);
 
     protected abstract string GetName(int i);
 

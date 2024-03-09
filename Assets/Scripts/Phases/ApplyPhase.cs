@@ -18,7 +18,7 @@ public class ApplyPhase : AbstractPhase
 
     private IEnumerator ExecuteActions()
     {
-        foreach (Preacher preacher in game.GetPreachers())
+        foreach (Leader preacher in game.GetPreachers())
         {
             yield return StartCoroutine(preacher.ApplyAction());
         }

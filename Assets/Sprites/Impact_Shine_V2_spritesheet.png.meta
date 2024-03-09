@@ -1,0 +1,487 @@
+fileFormatVersion: 2
+guid: 6e7c4d16bc640644399c80f1a71c58fb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2149705328512759579
+    second: Impact_Shine_V2_spritesheet_0
+  - first:
+      213: 2438357220188201680
+    second: Impact_Shine_V2_spritesheet_1
+  - first:
+      213: 7987428618124908613
+    second: Impact_Shine_V2_spritesheet_2
+  - first:
+      213: -967358612974592716
+    second: Impact_Shine_V2_spritesheet_3
+  - first:
+      213: -5346225694567243342
+    second: Impact_Shine_V2_spritesheet_4
+  - first:
+      213: -4498077633818728862
+    second: Impact_Shine_V2_spritesheet_5
+  - first:
+      213: 2174493080269310796
+    second: Impact_Shine_V2_spritesheet_6
+  - first:
+      213: -1571069012381991314
+    second: Impact_Shine_V2_spritesheet_7
+  - first:
+      213: -6451410712058067029
+    second: Impact_Shine_V2_spritesheet_8
+  - first:
+      213: -4984803115557686765
+    second: Impact_Shine_V2_spritesheet_9
+  - first:
+      213: 5900936633159436970
+    second: Impact_Shine_V2_spritesheet_10
+  - first:
+      213: -7213101807007612651
+    second: Impact_Shine_V2_spritesheet_11
+  - first:
+      213: 5326775448883438628
+    second: Impact_Shine_V2_spritesheet_12
+  - first:
+      213: 6079720987883676732
+    second: Impact_Shine_V2_spritesheet_13
+  - first:
+      213: -1130855488415306779
+    second: Impact_Shine_V2_spritesheet_14
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_0
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 1601
+        width: 382
+        height: 382
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5e88b32b466ba22e0800000000000000
+      internalID: -2149705328512759579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_1
+      rect:
+        serializedVersion: 2
+        x: 527
+        y: 1553
+        width: 479
+        height: 478
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0d2a3d809f8c6d120800000000000000
+      internalID: 2438357220188201680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 1023
+        y: 1535
+        width: 514
+        height: 513
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 548df1c420c09de60800000000000000
+      internalID: 7987428618124908613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_3
+      rect:
+        serializedVersion: 2
+        x: 1535
+        y: 1535
+        width: 513
+        height: 513
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 43d1c3f77704392f0800000000000000
+      internalID: -967358612974592716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1023
+        width: 513
+        height: 514
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b1e04a6e046ec5b0800000000000000
+      internalID: -5346225694567243342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 539
+        y: 1051
+        width: 456
+        height: 459
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 266ea10593e9391c0800000000000000
+      internalID: -4498077633818728862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 1156
+        y: 1156
+        width: 247
+        height: 246
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c4b4fff7fe95d2e10800000000000000
+      internalID: 2174493080269310796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_7
+      rect:
+        serializedVersion: 2
+        x: 1661
+        y: 1148
+        width: 261
+        height: 262
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e6ef85f9e01723ae0800000000000000
+      internalID: -1571069012381991314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_8
+      rect:
+        serializedVersion: 2
+        x: 122
+        y: 634
+        width: 267
+        height: 266
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ba701af632cf776a0800000000000000
+      internalID: -6451410712058067029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_9
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 630
+        width: 273
+        height: 273
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3127ced1afb62dab0800000000000000
+      internalID: -4984803115557686765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_10
+      rect:
+        serializedVersion: 2
+        x: 1142
+        y: 630
+        width: 275
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: aaace857a9654e150800000000000000
+      internalID: 5900936633159436970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_11
+      rect:
+        serializedVersion: 2
+        x: 1654
+        y: 629
+        width: 276
+        height: 276
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 51145988f1ae5eb90800000000000000
+      internalID: -7213101807007612651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_12
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 117
+        width: 275
+        height: 275
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 42428fc5c028ce940800000000000000
+      internalID: 5326775448883438628
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_13
+      rect:
+        serializedVersion: 2
+        x: 631
+        y: 118
+        width: 273
+        height: 274
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c342b48d6028f5450800000000000000
+      internalID: 6079720987883676732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Impact_Shine_V2_spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 1144
+        y: 119
+        width: 272
+        height: 272
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5eb64b0cce46e40f0800000000000000
+      internalID: -1130855488415306779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable: {}
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

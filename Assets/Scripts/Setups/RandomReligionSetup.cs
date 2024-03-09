@@ -8,7 +8,7 @@ public class RandomReligionSetup : MonoBehaviour
 {
     [SerializeField] private Map map;
     [SerializeField] private Game game;
-    [SerializeField] private Religion religionPrefab;
+    [SerializeField] private Voronation religionPrefab;
     [SerializeField] private GameObject religionsFolder;
 
     [Range(1, 20)][SerializeField] private int amount;
@@ -41,7 +41,7 @@ public class RandomReligionSetup : MonoBehaviour
         {
             Vector2 point = map.RandomPoint();
             //            Vector2 point = positions[i];   // map.RandomPoint();
-            Religion religion = GameObject.Instantiate(religionPrefab, religionsFolder.transform);
+            Voronation religion = GameObject.Instantiate(religionPrefab, religionsFolder.transform);
             ITactic tactic = ChooseTactic(i, religion);
 
             religion.Setup(religionsNames[i% religionsNames.Count], religionsColors[i % religionsColors.Count], tactic, 100);
@@ -51,7 +51,7 @@ public class RandomReligionSetup : MonoBehaviour
         }
     }
 
-    private ITactic ChooseTactic(int i, IReligion religion)
+    private ITactic ChooseTactic(int i, IVoronation religion)
     {
         if (i == 0) return null;
         if (i % 2 == 0) return new RiseInfluenceTactic(religion);

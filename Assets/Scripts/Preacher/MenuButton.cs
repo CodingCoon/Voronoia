@@ -26,6 +26,7 @@ public class MenuButton : MonoBehaviour, IMouseListener
         if (!interactable) return; 
         this.hovered = hovered;
         spriteRenderer.color = hovered ? HOVER_COLOR : DEFAULT_COLOR;
+        menu.Plan(hovered, actionType);
     }
 
     public ActionType GetActionType()

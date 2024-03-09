@@ -18,11 +18,11 @@ public class ActionPhase : AbstractPhase
 
     public override void OnEnd()
     {
-        foreach (Preacher preacher in game.GetPreachers())
+        foreach (Leader preacher in game.GetPreachers())
         {
-            if (! preacher.HasAction() && preacher.Religion.IsAi)
+            if (! preacher.HasAction() && preacher.Voronation.IsAi)
             {
-                preacher.Religion.Tactic.CreateAction(preacher);
+                preacher.Voronation.Tactic.CreateAction(preacher);
             }
         }
     }

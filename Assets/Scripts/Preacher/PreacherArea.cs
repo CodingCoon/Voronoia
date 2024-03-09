@@ -2,6 +2,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.U2D;
+using UnityEngine.UIElements;
 
 public class PreacherArea : MonoBehaviour, IMouseListener
 {
@@ -11,12 +12,18 @@ public class PreacherArea : MonoBehaviour, IMouseListener
     [SerializeField] private SpriteShapeController areaController;
     [SerializeField] private PreacherKnob knob;
 
-    private IReligion religion;
+    private IVoronation religion;
     private Vector3[] points;
 
     private bool dissolving = false;
 
-    public void Setup(IReligion religion)
+    private void Awake()
+    {
+        areaController.spline.Clear();
+    }
+
+
+    public void Setup(IVoronation religion)
     {
         this.religion = religion;
         influenceBounds.startColor = Color.black;
