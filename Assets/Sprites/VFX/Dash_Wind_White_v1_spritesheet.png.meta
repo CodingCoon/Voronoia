@@ -1,49 +1,55 @@
 fileFormatVersion: 2
-guid: 6961ef90625eaa348baae1055dc0fd24
+guid: d19fa61a5d887f840ab765546e425568
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5566386701023728243
-    second: Impact_Cut_V1_spritesheet_0
+      213: 3352965307317235536
+    second: Dash_Wind_White_v1_spritesheet_0
   - first:
-      213: 1322758414315639147
-    second: Impact_Cut_V1_spritesheet_1
+      213: 863836514894954023
+    second: Dash_Wind_White_v1_spritesheet_1
   - first:
-      213: -7954191790375951974
-    second: Impact_Cut_V1_spritesheet_2
+      213: -5558053389355643055
+    second: Dash_Wind_White_v1_spritesheet_2
   - first:
-      213: -6348063971969987688
-    second: Impact_Cut_V1_spritesheet_3
+      213: -6597778916811611622
+    second: Dash_Wind_White_v1_spritesheet_3
   - first:
-      213: 628382126027118020
-    second: Impact_Cut_V1_spritesheet_4
+      213: -2778726476337837060
+    second: Dash_Wind_White_v1_spritesheet_4
   - first:
-      213: -5770314149896308909
-    second: Impact_Cut_V1_spritesheet_5
+      213: -6279779050208463081
+    second: Dash_Wind_White_v1_spritesheet_5
   - first:
-      213: -6920881158430901631
-    second: Impact_Cut_V1_spritesheet_6
+      213: -4058790599136335713
+    second: Dash_Wind_White_v1_spritesheet_6
   - first:
-      213: -7488865217998501058
-    second: Impact_Cut_V1_spritesheet_7
+      213: 5730055655403925137
+    second: Dash_Wind_White_v1_spritesheet_7
   - first:
-      213: 14957279454552421
-    second: Impact_Cut_V1_spritesheet_8
+      213: 917625286864243287
+    second: Dash_Wind_White_v1_spritesheet_8
   - first:
-      213: 1878676144951388851
-    second: Impact_Cut_V1_spritesheet_9
+      213: -7905544898679955811
+    second: Dash_Wind_White_v1_spritesheet_9
   - first:
-      213: 1213547036973551661
-    second: Impact_Cut_V1_spritesheet_10
+      213: 2806957808004275095
+    second: Dash_Wind_White_v1_spritesheet_10
   - first:
-      213: -8483216082153808502
-    second: Impact_Cut_V1_spritesheet_11
+      213: 8918159116122021139
+    second: Dash_Wind_White_v1_spritesheet_11
   - first:
-      213: 2163045860841884049
-    second: Impact_Cut_V1_spritesheet_12
+      213: 720684854337156168
+    second: Dash_Wind_White_v1_spritesheet_12
   - first:
-      213: 9208454661413280434
-    second: Impact_Cut_V1_spritesheet_13
+      213: -3933831199587586777
+    second: Dash_Wind_White_v1_spritesheet_13
+  - first:
+      213: 7842358405105902739
+    second: Dash_Wind_White_v1_spritesheet_14
+  - first:
+      213: 375460301263122779
+    second: Dash_Wind_White_v1_spritesheet_15
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -148,11 +154,24 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_0
+      name: Dash_Wind_White_v1_spritesheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -166,14 +185,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d8da50399c830c2b0800000000000000
-      internalID: -5566386701023728243
+      spriteID: 05f2ad6ae20288e20800000000000000
+      internalID: 3352965307317235536
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_1
+      name: Dash_Wind_White_v1_spritesheet_1
       rect:
         serializedVersion: 2
         x: 512
@@ -187,14 +206,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: b6151f005c16b5210800000000000000
-      internalID: 1322758414315639147
+      spriteID: 72e3356cbb6fcfb00800000000000000
+      internalID: 863836514894954023
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_2
+      name: Dash_Wind_White_v1_spritesheet_2
       rect:
         serializedVersion: 2
         x: 1024
@@ -208,14 +227,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a912053b5b80d9190800000000000000
-      internalID: -7954191790375951974
+      spriteID: 15f0dc4e3e3ddd2b0800000000000000
+      internalID: -5558053389355643055
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_3
+      name: Dash_Wind_White_v1_spritesheet_3
       rect:
         serializedVersion: 2
         x: 1536
@@ -229,14 +248,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 89b0643737527e7a0800000000000000
-      internalID: -6348063971969987688
+      spriteID: a12e1ec180bff64a0800000000000000
+      internalID: -6597778916811611622
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_4
+      name: Dash_Wind_White_v1_spritesheet_4
       rect:
         serializedVersion: 2
         x: 0
@@ -250,14 +269,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4c51d0dd63678b800800000000000000
-      internalID: 628382126027118020
+      spriteID: cfb09e9fdfaff69d0800000000000000
+      internalID: -2778726476337837060
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_5
+      name: Dash_Wind_White_v1_spritesheet_5
       rect:
         serializedVersion: 2
         x: 512
@@ -271,14 +290,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 35735056ad9bbefa0800000000000000
-      internalID: -5770314149896308909
+      spriteID: 717726cb93eb9d8a0800000000000000
+      internalID: -6279779050208463081
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_6
+      name: Dash_Wind_White_v1_spritesheet_6
       rect:
         serializedVersion: 2
         x: 1024
@@ -292,14 +311,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 18a380b314714ff90800000000000000
-      internalID: -6920881158430901631
+      spriteID: f98a8c854774ca7c0800000000000000
+      internalID: -4058790599136335713
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_7
+      name: Dash_Wind_White_v1_spritesheet_7
       rect:
         serializedVersion: 2
         x: 1536
@@ -313,14 +332,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e3bcb6e03c4321890800000000000000
-      internalID: -7488865217998501058
+      spriteID: 19ea19b624f358f40800000000000000
+      internalID: 5730055655403925137
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_8
+      name: Dash_Wind_White_v1_spritesheet_8
       rect:
         serializedVersion: 2
         x: 0
@@ -334,14 +353,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 561e1b00193253000800000000000000
-      internalID: 14957279454552421
+      spriteID: 75a857c265f0cbc00800000000000000
+      internalID: 917625286864243287
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_9
+      name: Dash_Wind_White_v1_spritesheet_9
       rect:
         serializedVersion: 2
         x: 512
@@ -355,14 +374,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3bae3db0006621a10800000000000000
-      internalID: 1878676144951388851
+      spriteID: d9e974eccccd94290800000000000000
+      internalID: -7905544898679955811
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_10
+      name: Dash_Wind_White_v1_spritesheet_10
       rect:
         serializedVersion: 2
         x: 1024
@@ -376,14 +395,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d205909b99267d010800000000000000
-      internalID: 1213547036973551661
+      spriteID: 79b9a95214154f620800000000000000
+      internalID: 2806957808004275095
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_11
+      name: Dash_Wind_White_v1_spritesheet_11
       rect:
         serializedVersion: 2
         x: 1536
@@ -397,14 +416,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a8d57565bef854a80800000000000000
-      internalID: -8483216082153808502
+      spriteID: 31d5dd6377aa3cb70800000000000000
+      internalID: 8918159116122021139
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_12
+      name: Dash_Wind_White_v1_spritesheet_12
       rect:
         serializedVersion: 2
         x: 0
@@ -418,14 +437,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1990c5800cea40e10800000000000000
-      internalID: 2163045860841884049
+      spriteID: 84435c18e03600a00800000000000000
+      internalID: 720684854337156168
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Impact_Cut_V1_spritesheet_13
+      name: Dash_Wind_White_v1_spritesheet_13
       rect:
         serializedVersion: 2
         x: 512
@@ -439,8 +458,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2ba14dfd9b00bcf70800000000000000
-      internalID: 9208454661413280434
+      spriteID: 72dab36cd593869c0800000000000000
+      internalID: -3933831199587586777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dash_Wind_White_v1_spritesheet_14
+      rect:
+        serializedVersion: 2
+        x: 1024
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 394e2a93b67a5dc60800000000000000
+      internalID: 7842358405105902739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Dash_Wind_White_v1_spritesheet_15
+      rect:
+        serializedVersion: 2
+        x: 1536
+        y: 0
+        width: 512
+        height: 512
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b51bc0c9727e53500800000000000000
+      internalID: 375460301263122779
       vertices: []
       indices: 
       edges: []
@@ -448,7 +509,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b987af8e5339cac4c9b9669e52ed9dfd
+    spriteID: b21227265d3f5ef4da578e1fc0731a49
     internalID: 0
     vertices: []
     indices: 
@@ -456,20 +517,22 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Impact_Cut_V1_spritesheet_0: -5566386701023728243
-      Impact_Cut_V1_spritesheet_1: 1322758414315639147
-      Impact_Cut_V1_spritesheet_10: 1213547036973551661
-      Impact_Cut_V1_spritesheet_11: -8483216082153808502
-      Impact_Cut_V1_spritesheet_12: 2163045860841884049
-      Impact_Cut_V1_spritesheet_13: 9208454661413280434
-      Impact_Cut_V1_spritesheet_2: -7954191790375951974
-      Impact_Cut_V1_spritesheet_3: -6348063971969987688
-      Impact_Cut_V1_spritesheet_4: 628382126027118020
-      Impact_Cut_V1_spritesheet_5: -5770314149896308909
-      Impact_Cut_V1_spritesheet_6: -6920881158430901631
-      Impact_Cut_V1_spritesheet_7: -7488865217998501058
-      Impact_Cut_V1_spritesheet_8: 14957279454552421
-      Impact_Cut_V1_spritesheet_9: 1878676144951388851
+      Dash_Wind_White_v1_spritesheet_0: 3352965307317235536
+      Dash_Wind_White_v1_spritesheet_1: 863836514894954023
+      Dash_Wind_White_v1_spritesheet_10: 2806957808004275095
+      Dash_Wind_White_v1_spritesheet_11: 8918159116122021139
+      Dash_Wind_White_v1_spritesheet_12: 720684854337156168
+      Dash_Wind_White_v1_spritesheet_13: -3933831199587586777
+      Dash_Wind_White_v1_spritesheet_14: 7842358405105902739
+      Dash_Wind_White_v1_spritesheet_15: 375460301263122779
+      Dash_Wind_White_v1_spritesheet_2: -5558053389355643055
+      Dash_Wind_White_v1_spritesheet_3: -6597778916811611622
+      Dash_Wind_White_v1_spritesheet_4: -2778726476337837060
+      Dash_Wind_White_v1_spritesheet_5: -6279779050208463081
+      Dash_Wind_White_v1_spritesheet_6: -4058790599136335713
+      Dash_Wind_White_v1_spritesheet_7: 5730055655403925137
+      Dash_Wind_White_v1_spritesheet_8: 917625286864243287
+      Dash_Wind_White_v1_spritesheet_9: -7905544898679955811
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -31,7 +31,6 @@ public class Game : MonoBehaviour
 
     public void NextRound()
     {
-        print("New Round");
         Round round = new Round();
         curRound = round;
         rounds.Add(curRound);
@@ -46,7 +45,6 @@ public class Game : MonoBehaviour
         }
         AbstractPhase next = currentPhase == null ? initialPhase : currentPhase.GetNextPhase();
 
-        print("Next Phase " + next.GetPhaseType());
         currentPhase = next;
         PhaseType = currentPhase.GetPhaseType();
         currentPhase.OnStart();
@@ -61,7 +59,6 @@ public class Game : MonoBehaviour
     internal void RemoveReligion(Voronation diedReligion)
     {
         print("Religion GameOver " + diedReligion);
-
         religions.Add(diedReligion);
         UpdateGameState();
     }

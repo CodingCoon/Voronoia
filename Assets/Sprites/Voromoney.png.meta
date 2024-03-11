@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e00c879db44b7704c95c61add0152e8e
+guid: d0efbb4560ae5934590a20752253932d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5963358369739033858
-    second: Voromoney_0
+      213: 7012419350278460808
+    second: Voromoney 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -109,17 +109,30 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Windows Store Apps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Voromoney_0
+      name: Voromoney 1_0
       rect:
         serializedVersion: 2
-        x: 9
-        y: 5
-        width: 30
-        height: 38
+        x: 7
+        y: 4
+        width: 34
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -127,8 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 20dc5a097da12c250800000000000000
-      internalID: 5963358369739033858
+      spriteID: 8855c65ee3e115160800000000000000
+      internalID: 7012419350278460808
       vertices: []
       indices: 
       edges: []
@@ -136,7 +149,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -144,7 +157,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Voromoney_0: 5963358369739033858
+      Voromoney 1_0: 7012419350278460808
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

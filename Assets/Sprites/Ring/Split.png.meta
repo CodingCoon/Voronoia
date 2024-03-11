@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: cdda4df3c7615934fbd31761257a018e
+guid: df69e641ccbebe5448b1bb753380a33e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1596038421821838100
-    second: voronoi_example_0
+      213: -6509232630430761034
+    second: Split_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -114,7 +114,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -126,22 +126,22 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: voronoi_example_0
+      name: Split_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 1600
-        height: 1231
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        width: 111
+        height: 111
+      alignment: 3
+      pivot: {x: 1, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 413d09c0d74462610800000000000000
-      internalID: 1596038421821838100
+      spriteID: 6bffac6f86f8aa5a0800000000000000
+      internalID: -6509232630430761034
       vertices: []
       indices: 
       edges: []
@@ -149,7 +149,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 1465c5f1d5b6994409f2410163bf7fe9
     internalID: 0
     vertices: []
     indices: 
@@ -157,7 +157,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      voronoi_example_0: 1596038421821838100
+      Split_0: -6509232630430761034
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

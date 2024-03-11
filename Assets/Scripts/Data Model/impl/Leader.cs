@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Leader : MonoBehaviour, ILeader, IVoronoiCellOwner
@@ -9,6 +10,11 @@ public class Leader : MonoBehaviour, ILeader, IVoronoiCellOwner
 
     [SerializeField] private PreacherKnob knob;
     [SerializeField] private PreacherArea area;
+    [SerializeField] private Animator animator;
+    [SerializeField] private Prototype<VFX> vfxPrototype;
+    [SerializeField] private SpriteRenderer numberRenderer;
+
+    public NumberSprites numberSprites; 
 
     public IVoronation Voronation { get; private set; }
     public int Number { get; private set; }
@@ -32,17 +38,22 @@ public class Leader : MonoBehaviour, ILeader, IVoronoiCellOwner
         knob.transform.position = new Vector3(position.x, position.y, -5);
         knob.Setup(Voronation);
         area.Setup(Voronation);
+        UpdateAnimator();
+        UpdateNumberRenderer();
+        
     }
 
     public void Reset()
     {
         positions.Clear();
         Action = NoAction.NO_ACTION;
+        UpdateAnimator();
     }
 
     public void SetAction(IAction action)
     {
         this.Action = action;
+        UpdateAnimator();
     }
 
     public bool HasAction()
@@ -104,13 +115,11 @@ public class Leader : MonoBehaviour, ILeader, IVoronoiCellOwner
 
     public void ImprovePower()
     {
-        print("Improve Power: " + Power);
         Power += 0.1f;
     }
 
     public void ImproveInfluence()
     {
-        print("Improve Influence: " + Income);
         Income += 0.1f;
     }
 
@@ -129,5 +138,61 @@ public class Leader : MonoBehaviour, ILeader, IVoronoiCellOwner
         float scale = 1 - Math.Clamp(progress, 0f, 1f);
         transform.localScale = new Vector3(scale, scale);
         area.Dissolve(progress);
+    }
+
+    // The pulsing animator is shown, when its the leader belongs to the human player, the action is null or it is the NO_ACTION
+    private void UpdateAnimator()
+    {
+        if (Voronation.IsAi)
+        {
+            animator.gameObject.SetActive(false);
+        }
+        else
+        {
+            animator.gameObject.SetActive(Action == null || Action == NoAction.NO_ACTION);
+        }
+    }
+
+    private void UpdateNumberRenderer()
+    {
+        if (Voronation.IsAi)
+        {
+            numberRenderer.sprite = null;
+        }
+        else
+        {
+            numberRenderer.sprite = numberSprites.Get(Number);
+        }
+    }
+
+    public IEnumerator ShowVFX(string name)
+    {
+        VFX vfx = vfxPrototype.Create(transform, knob.transform.position);
+        vfx.Play(name);
+        yield return new WaitForSeconds(1f);
+    }
+
+
+    [Serializable]
+    public class NumberSprites
+    {
+        [SerializeField] internal Sprite one;
+        [SerializeField] internal Sprite two;
+        [SerializeField] internal Sprite three;
+        [SerializeField] internal Sprite four;
+        [SerializeField] internal Sprite five;
+
+        public Sprite Get(int number)
+        {
+            switch (number % 5)
+            {
+                case 1: return one;
+                case 2: return two;
+                case 3: return three;
+                case 4: return four;
+                case 5: return five;
+            }
+            throw new System.Exception("snh: " + number);
+        }
     }
 }

@@ -41,7 +41,10 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Preachers
+  - name: Area
+    uniqueID: 1737169261
+    locked: 0
+  - name: Leader
     uniqueID: 2364313565
     locked: 0
   - name: Preview

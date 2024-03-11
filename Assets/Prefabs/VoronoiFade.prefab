@@ -2053,6 +2053,7 @@ MonoBehaviour:
   - {fileID: 728003386221407226}
   - {fileID: 2089688799397896127}
   - {fileID: 8842844954207647161}
+  material: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &458193599209126604
 GameObject:
   m_ObjectHideFlags: 0

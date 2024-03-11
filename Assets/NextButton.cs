@@ -1,11 +1,11 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class NextButton : MonoBehaviour
 {
-    [SerializeField] private Button nextButton;
-    [SerializeField] private TextMeshProUGUI buttonText;
+    [SerializeField] private MainMenuButton nextButton;
+    [SerializeField] private TextMeshPro buttonText;
+    [SerializeField] private Animator animator;
 
     void Update()
     {
@@ -16,6 +16,7 @@ public class NextButton : MonoBehaviour
     // Called from the UI
     public void NextPhase()
     {
+        animator.Play("Click");
         Game.INSTANCE.NextPhase();
     }
 
@@ -23,11 +24,11 @@ public class NextButton : MonoBehaviour
     {
         if (Game.INSTANCE.PhaseType == PhaseType.ACTION)
         {
-            buttonText.text = "Apply actions";
+            buttonText.text = "APPLY ACTIONS";
         }
         else if (Game.INSTANCE.PhaseType == PhaseType.DEATH)
         {
-            buttonText.text = "Next round";
+            buttonText.text = "NEXT ROUND";
         }
         else
         {
@@ -37,11 +38,11 @@ public class NextButton : MonoBehaviour
 
     private void UpdateInteractability()
     {
-        nextButton.interactable = Game.INSTANCE.PhaseType == PhaseType.EVALUATION || Game.INSTANCE.PhaseType == PhaseType.ACTION;
+        nextButton.SetInteractable(Game.INSTANCE.PhaseType == PhaseType.EVALUATION || Game.INSTANCE.PhaseType == PhaseType.ACTION);
 
         if (GameManager.Instance.IsTutorial)
         {
-            nextButton.interactable = TutorialManager.Instance.NextRoundButtonEnabled && nextButton.interactable;
+            nextButton.SetInteractable(TutorialManager.Instance.NextRoundButtonEnabled && nextButton.Interactable);
         }
     }
 }

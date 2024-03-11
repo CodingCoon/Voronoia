@@ -271,52 +271,51 @@ public class VoronoiCalculator : MonoBehaviour
         return new CCVoronoiCell(owner, new List<Vector2>() { bl, tl, tr, br });
     }
 
-    private void OnDrawGizmos()
-    {
-        return;
-        Vector2 bl = new Vector2(-map.HalfMapSize, -map.HalfMapSize);
-        Vector2 tl = new Vector2(-map.HalfMapSize, map.HalfMapSize);
-        Vector2 tr = new Vector2(map.HalfMapSize, map.HalfMapSize);
-        Vector2 br = new Vector2(map.HalfMapSize, -map.HalfMapSize);
+    //private void OnDrawGizmos()
+    //{
+        //Vector2 bl = new Vector2(-map.HalfMapSize, -map.HalfMapSize);
+        //Vector2 tl = new Vector2(-map.HalfMapSize, map.HalfMapSize);
+        //Vector2 tr = new Vector2(map.HalfMapSize, map.HalfMapSize);
+        //Vector2 br = new Vector2(map.HalfMapSize, -map.HalfMapSize);
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawLine(tl, tr);
-        Gizmos.DrawLine(tr, br);
-        Gizmos.DrawLine(br, bl);
-        Gizmos.DrawLine(bl, tl);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawLine(tl, tr);
+        //Gizmos.DrawLine(tr, br);
+        //Gizmos.DrawLine(br, bl);
+        //Gizmos.DrawLine(bl, tl);
 
-        Gizmos.color = Color.green;
-        foreach (CCTouchPoint point in touchPoints)
-        {
-            if (point.First == first || point.Second == first)
-            {
-                Gizmos.DrawSphere(point.Center, 0.1f);
-            }
-        }
+        //Gizmos.color = Color.green;
+        //foreach (CCTouchPoint point in touchPoints)
+        //{
+        //    if (point.First == first || point.Second == first)
+        //    {
+        //        Gizmos.DrawSphere(point.Center, 0.1f);
+        //    }
+        //}
 
-        Gizmos.color = Color.black;
-        foreach (CCTouchLine line in touchLines)
-        {
-            if (line.Owner.First == first || line.Owner.Second == first)
-            {
-                Gizmos.DrawLine(line.FirstPoint, line.SecondPoint);
-            }
-        }
+        //Gizmos.color = Color.black;
+        //foreach (CCTouchLine line in touchLines)
+        //{
+        //    if (line.Owner.First == first || line.Owner.Second == first)
+        //    {
+        //        Gizmos.DrawLine(line.FirstPoint, line.SecondPoint);
+        //    }
+        //}
 
-        Gizmos.color = Color.cyan;
-        foreach (CCIntersection point in allIntersections)
-        {
-            if (point.BelongsTo(first))
-            { 
-                Gizmos.DrawSphere(point.Point, 0.15f);
-            }
-        }
+        //Gizmos.color = Color.cyan;
+        //foreach (CCIntersection point in allIntersections)
+        //{
+        //    if (point.BelongsTo(first))
+        //    { 
+        //        Gizmos.DrawSphere(point.Point, 0.15f);
+        //    }
+        //}
 
-        Gizmos.color = Color.yellow;
-        foreach (CCIntersection point in reducedIntersections)
-        {
-            // Gizmos.DrawSphere(point.Point, 0.1f);
-        }
-    }
+        //Gizmos.color = Color.yellow;
+        //foreach (CCIntersection point in reducedIntersections)
+        //{
+        //    // Gizmos.DrawSphere(point.Point, 0.1f);
+        //}
+    //}
 
 }

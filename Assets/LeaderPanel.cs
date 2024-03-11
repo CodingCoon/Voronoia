@@ -19,7 +19,7 @@ public class LeaderPanel : MonoBehaviour
     {
         Leader curLeader = LeaderSelectionManager.INSTANCE.Leader;
         rootChild.SetActive(curLeader != null);
-        return;
+        
         if (curLeader != null)
         {
             idLabel.text = "Leader #" + curLeader.Number;

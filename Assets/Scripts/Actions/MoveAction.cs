@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 public class MoveAction : IAction, IPlannedAction
@@ -20,6 +19,7 @@ public class MoveAction : IAction, IPlannedAction
     public IEnumerator Execute()
     {
         preacherKnob.ActivateTrail(true);
+        SoundManager.PlaySound("Move Leader");
         float progress = 0f;
         float elapsedTime = 0f;
         Vector3 startPos = preacherKnob.transform.position;
@@ -40,7 +40,6 @@ public class MoveAction : IAction, IPlannedAction
 
     public float GetPrice()
     {
-        Debug.Log(Vector2.Distance(newPosition, preacherKnob.transform.position));
         return -PRICE_PER_DISTANCE * Vector2.Distance(newPosition, preacherKnob.transform.position);
     }
 

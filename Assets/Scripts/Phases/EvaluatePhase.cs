@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EvaluatePhase : AbstractPhase
 {
@@ -14,6 +15,14 @@ public class EvaluatePhase : AbstractPhase
     {
         game.GetPreachers().ForEach(p => p.Evaluate());
         game.GetVoronations().ForEach(v => v.UpdateIncome());
+
+        StartCoroutine(DoSth());
+    }
+
+    public IEnumerator DoSth()
+    {
+        yield return new WaitForSeconds(1f);
+        Game.INSTANCE.NextPhase();
     }
 
     public override AbstractPhase GetNextPhase()

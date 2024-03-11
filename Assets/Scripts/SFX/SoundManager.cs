@@ -77,7 +77,7 @@ public class SoundManager : MonoBehaviour
         clip = soundBase.GetAudioClip(soundName);
         if (clip != null) return clip;
 
-        Debug.LogWarning("no sound for key " + soundName);      
+    //    Debug.LogWarning("no sound for key " + soundName);      
         // throw new System.Exception("no sound for key " + soundName);
         return null;
     }

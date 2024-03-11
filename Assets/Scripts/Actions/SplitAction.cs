@@ -19,6 +19,8 @@ public class SplitAction : IAction, IPlannedAction
     public IEnumerator Execute()
     {
         PreacherKnob splittedKnob = preacher.Split(newPosition);
+        SoundManager.PlaySound("Split Leader");
+        splittedKnob.ActivateTrail(true);
         float progress = 0f;
         float elapsedTime = 0f;
 
@@ -31,6 +33,7 @@ public class SplitAction : IAction, IPlannedAction
             splittedKnob.SetColor(progress);
             yield return null;
         }
+        splittedKnob.ActivateTrail(true);
     }
 
 

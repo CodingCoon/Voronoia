@@ -12,13 +12,15 @@ public class Random6PlayerSetup : AbstractSetup
         "Saison"};
 
     private static readonly List<Color> COLORS = new List<Color>() {
-        FromHex("64766A"),  // Grün
-        FromHex("F4F2F3"),  // Eierschale
-        FromHex("C0A9BD"),  // Rosa
-        FromHex("94A7AE"),  // grau 
-        FromHex("FFBB98"),  // Orange
-        FromHex("2A403D")}; // Blau
-  
+        FromHex("EDADA3"),  // peach
+        FromHex("CC446B"),  // red
+        FromHex("45556C"),  // gray blue
+        FromHex("3A2368"),  // purple
+        FromHex("3C8F7B"),  // green
+        FromHex("640E40")}; // pink
+
+
+
     protected override int GetPlayerCount()
     {
         return 6;

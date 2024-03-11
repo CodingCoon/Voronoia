@@ -1,10 +1,7 @@
-
-using System;
 using UnityEngine;
 using UnityEngine.U2D;
-using UnityEngine.UIElements;
 
-public class PreacherArea : MonoBehaviour, IMouseListener
+public class PreacherArea : MonoBehaviour
 {
     [SerializeField] private new PolygonCollider2D collider;
     [SerializeField] private LineRenderer influenceBounds;
@@ -15,13 +12,10 @@ public class PreacherArea : MonoBehaviour, IMouseListener
     private IVoronation religion;
     private Vector3[] points;
 
-    private bool dissolving = false;
-
     private void Awake()
     {
         areaController.spline.Clear();
     }
-
 
     public void Setup(IVoronation religion)
     {
@@ -59,23 +53,6 @@ public class PreacherArea : MonoBehaviour, IMouseListener
         return result * .5f;
     }
 
-    public void OnHover(bool hovered)
-    {
-        if (dissolving) return;
-        if (hovered)
-        {
-            influenceBounds.startColor = Color.white;
-            influenceBounds.endColor = Color.white;
-            influenceBounds.sortingOrder = 2;
-        }
-        else
-        {
-            influenceBounds.startColor = Color.black;
-            influenceBounds.endColor = Color.black;
-            influenceBounds.sortingOrder = 1;
-        }
-    }
-
     public Vector2 ClosestPoint(Vector2 pos)
     {
         return collider.ClosestPoint(pos);
@@ -83,7 +60,6 @@ public class PreacherArea : MonoBehaviour, IMouseListener
 
     internal void Dissolve(float progress)
     {
-        dissolving = true;
         influenceBounds.startColor = Color.Lerp(Color.black, Color.clear, progress);
         influenceBounds.endColor = Color.Lerp(Color.black, Color.clear, progress);
         areaRenderer.color = Color.Lerp(religion.Color, Color.clear, progress);

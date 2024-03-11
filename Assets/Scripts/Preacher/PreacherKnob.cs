@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class PreacherKnob : MonoBehaviour, IMouseListener
 {   
-    private IVoronation religion;
+    private IVoronation voronation;
 
     private bool hovered;
 
     [SerializeField] private Leader preacher;
     [SerializeField] private SpriteRenderer inner;
+    [SerializeField] private SpriteRenderer number;
     [SerializeField] private new CircleCollider2D collider;
     [SerializeField] private GameObject preview;
     [SerializeField] private PreacherArea area;
@@ -23,7 +24,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
 
     public void Setup(IVoronation religion)
     {
-        this.religion = religion;
+        this.voronation = religion;
         inner.color = religion.Color;
         preview.SetActive(false);
         preview.transform.position = transform.position;
@@ -37,7 +38,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
 
     private void Update()
     {
-        if (religion.IsAi) return;
+        if (voronation.IsAi) return;
 
         if (Input.GetMouseButtonDown(0) && showsRing)
         {
@@ -62,6 +63,7 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
 
         if (Input.GetMouseButtonDown(1))
         {
+            if (Game.INSTANCE.PhaseType != PhaseType.ACTION) return;
             if (showsRing)
             {
                 showsRing = false;
@@ -148,21 +150,24 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
 
     internal void SetColor(float progress)
     {
-        inner.color = Color.Lerp(Color.clear, religion.Color, progress);
+        inner.color = Color.Lerp(Color.clear, voronation.Color, progress);
     }
 
     public void OnHover(bool hovered)
     {
+        if (voronation.IsAi) return;
         this.hovered = hovered;
         if (hovered)
         {
             LeaderSelectionManager.INSTANCE.UpdateLeader(preacher);
             inner.color = Color.clear;
+            number.color = voronation.Color;
         }
         else
         {
             LeaderSelectionManager.INSTANCE.UpdateLeader(null);
-            inner.color = religion.Color;
+            inner.color = voronation.Color;
+            number.color = Color.black;
         }
     }
 
