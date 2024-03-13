@@ -52,6 +52,6 @@ public class TutorialSetup : AbstractSetup
 
     protected override float GetMoney(int i)
     {
-        return i == 1 ? 0 : base.GetMoney(i); 
+        return i == 1 ? -50 : base.GetMoney(i); 
     }
 }

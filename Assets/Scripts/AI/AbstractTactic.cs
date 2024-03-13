@@ -1,13 +1,13 @@
 ﻿public abstract class AbstractTactic : ITactic
 {
-    protected readonly IVoronation religion;
+    protected readonly IVoronation voronation;
 
-    protected AbstractTactic(IVoronation religion)
+    protected AbstractTactic(IVoronation voronation)
     {
-        this.religion = religion;
+        this.voronation = voronation;
     }
 
-    public abstract void CreateAction(ILeader preacher);
+    public abstract void CreateAction(ILeader leader);
 
     public abstract void Clear();
 }

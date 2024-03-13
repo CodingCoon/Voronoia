@@ -24,9 +24,9 @@ public class Voronation : MonoBehaviour, IVoronation
         return Name;
     }
 
-    public void Setup(string religionName, Color color, ITactic tactic, float money)
+    public void Setup(string nationName, Color color, ITactic tactic, float money)
     {
-        this.Name = religionName;
+        this.Name = nationName;
         this.Color = color;
         this.Tactic = tactic;
         this.Money = money;

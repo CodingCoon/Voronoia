@@ -28,7 +28,7 @@ public class IncreaseIncomeAction : IAction, IPlannedAction
 
     public string GetDetailedInfos()
     {
-        return "Income factor: " + preacher.Income + " -> " + (preacher.Income + INCREASE);
+        return "Income factor: \n" + preacher.Income + " -> " + (preacher.Income + INCREASE);
     }
 
     public void UpdateTarget(Vector2 position){}

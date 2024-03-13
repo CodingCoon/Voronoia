@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class DoNothingTactic : AbstractTactic
 {
-    public DoNothingTactic(IVoronation religion) : base(religion) { }
+    public DoNothingTactic(IVoronation voronation) : base(voronation) { }
 
-    public override void CreateAction(ILeader preacher)
+    public override void CreateAction(ILeader leader)
     {
-        preacher.SetAction(NoAction.NO_ACTION);
+        leader.SetAction(NoAction.NO_ACTION);
     }
 
     public override void Clear()

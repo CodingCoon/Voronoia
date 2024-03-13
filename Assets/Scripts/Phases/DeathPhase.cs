@@ -35,7 +35,6 @@ public class DeathPhase : AbstractPhase
         {
             yield return StartCoroutine(RemoveLand(Leader));
         }
-        game.NextPhase();
     }
 
 

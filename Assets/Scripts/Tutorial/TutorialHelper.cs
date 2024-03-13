@@ -19,6 +19,11 @@ public class TutorialHelper : MonoBehaviour
         return false;
     }
 
+    public bool IsVoronoiPhase()
+    {
+        return game.PhaseType == PhaseType.VORONOI;
+    }
+
     public bool IsDeathPhase()
     {
         return game.PhaseType == PhaseType.DEATH;

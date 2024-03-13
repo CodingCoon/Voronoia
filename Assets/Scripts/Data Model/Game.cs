@@ -6,9 +6,7 @@ public class Game : MonoBehaviour
 {
     public static Game INSTANCE;
 
-    private List<Voronation> religions = new List<Voronation>();
-    private List<Round> rounds = new List<Round>();
-
+    private List<Voronation> voronations = new List<Voronation>();
 
     [SerializeField] private AbstractPhase initialPhase; 
     private AbstractPhase currentPhase; 
@@ -26,14 +24,6 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
-        NextRound();
-    }
-
-    public void NextRound()
-    {
-        Round round = new Round();
-        curRound = round;
-        rounds.Add(curRound);
         NextPhase();
     }
 
@@ -41,8 +31,13 @@ public class Game : MonoBehaviour
     {
         if (currentPhase != null)
         {
+            if (currentPhase.GetPhaseType() == PhaseType.DEATH)
+            {
+                NewRound();        
+            }
             currentPhase.OnEnd();
         }
+
         AbstractPhase next = currentPhase == null ? initialPhase : currentPhase.GetNextPhase();
 
         currentPhase = next;
@@ -50,16 +45,21 @@ public class Game : MonoBehaviour
         currentPhase.OnStart();
     }
 
+    private void NewRound()
+    {
+        voronations.ForEach(v => v.Reset());
+    }
+
     public void AddReligion(Voronation religion)
     {
         //print("add " + religion.ReligionName);
-        religions.Add(religion);
+        voronations.Add(religion);
     }
 
     internal void RemoveReligion(Voronation diedReligion)
     {
         print("Religion GameOver " + diedReligion);
-        religions.Add(diedReligion);
+        voronations.Add(diedReligion);
         UpdateGameState();
     }
 
@@ -68,7 +68,7 @@ public class Game : MonoBehaviour
         bool playerActive = false;
         bool aiActive = false;
 
-        foreach (Voronation religion in religions)
+        foreach (Voronation religion in voronations)
         {
             aiActive = aiActive || religion.IsAi;
             playerActive = playerActive || religion.IsPlayer;
@@ -87,7 +87,7 @@ public class Game : MonoBehaviour
     public List<Leader> GetPreachers()
     {
         List<Leader> preachers = new List<Leader>();
-        foreach (Voronation religion in religions)
+        foreach (Voronation religion in voronations)
         {
             foreach (Leader preacher in religion.GetLeaders())
             {
@@ -99,7 +99,7 @@ public class Game : MonoBehaviour
 
     public List<Voronation> GetVoronations()
     {
-        return religions;
+        return voronations;
     }
 
     internal bool IsOver()
@@ -109,7 +109,7 @@ public class Game : MonoBehaviour
 
     internal Voronation GetHumanPlayer()
     {
-        return religions[0]; // todo sollte hinhauen, kann man aber sicher auch lazy cachen
+        return voronations[0]; // todo sollte hinhauen, kann man aber sicher auch lazy cachen
     }
 
     public enum GameState

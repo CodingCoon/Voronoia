@@ -12,7 +12,7 @@ public class NoAction : IAction
 
     public string GetDetailedInfos()
     {
-        return "Will do nothing";
+        return "Do nothing";
     }
 
     public float GetPrice()
