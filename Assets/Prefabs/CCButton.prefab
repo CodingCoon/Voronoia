@@ -399,7 +399,7 @@ MonoBehaviour:
   m_UpdateCollider: 1
   m_EnableTangents: 0
   m_GeometryCached: 0
-  m_UTess2D: 1
+  m_UTess2D: 0
   m_UpdateShadow: 0
   m_ShadowDetail: 16
   m_ShadowOffset: 0.5

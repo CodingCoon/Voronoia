@@ -11,10 +11,12 @@ public class GameOverPhase : AbstractPhase
 
     public override void OnStart()
     {
+        game.ClearInteraction();
+        game.ShowResult();
     }
 
     public override AbstractPhase GetNextPhase()
     {
-        throw new System.Exception("do not call");
+        return this;
     }
 }

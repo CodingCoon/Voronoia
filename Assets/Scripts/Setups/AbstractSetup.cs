@@ -20,8 +20,8 @@ public abstract class AbstractSetup : MonoBehaviour
 
             religion.Setup(name, GetColor(i), tactic, money);
             religion.name = name;
-            religion.AddPreacher(point);
             game.AddReligion(religion);
+            religion.AddPreacher(point);
         }
     }
 

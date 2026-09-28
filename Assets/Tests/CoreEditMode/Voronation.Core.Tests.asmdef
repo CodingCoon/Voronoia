@@ -1,0 +1,6 @@
+{
+    "name": "Voronation.Core.Tests",
+    "references": ["Voronation.Core", "Voronation.Geometry"],
+    "includePlatforms": ["Editor"],
+    "optionalUnityReferences": ["TestAssemblies"]
+}

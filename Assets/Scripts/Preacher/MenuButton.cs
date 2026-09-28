@@ -15,7 +15,7 @@ public class MenuButton : MonoBehaviour, IMouseListener
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && hovered && interactable)
+        if (Game.INSTANCE.CanPlan && Input.GetMouseButtonDown(0) && hovered && interactable)
         {
             menu.Execute(actionType);
         }
@@ -23,7 +23,8 @@ public class MenuButton : MonoBehaviour, IMouseListener
 
     public void OnHover(bool hovered)
     {
-        if (!interactable) return; 
+        if (!Game.INSTANCE.CanPlan) hovered = false;
+        if (!interactable) return;
         this.hovered = hovered;
         spriteRenderer.color = hovered ? HOVER_COLOR : DEFAULT_COLOR;
         menu.Plan(hovered, actionType);

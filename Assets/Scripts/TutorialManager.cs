@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 using static MenuButton;
 
@@ -23,7 +22,7 @@ public class TutorialManager : MonoBehaviour
     private static string DESCRIPTION_9 = "As another action you may raise the power of your leader, which forces more pressure against other leader or you may increase the income of a leader to get more money from the land around him. Choose one of these actions!";
 
     private static string DESCRIPTION_10 = "Again all actions get applied, the land is divided up and income is collected.";
-    private static string DESCRIPTION_11 = "But another player can't pay his leader. The player is out of the game. The land stays unclaimed till next round.";
+    private static string DESCRIPTION_11 = "Eine Fraktion kann ihren Ritter nicht mehr bezahlen und scheidet aus. Ihr Gebiet wird nach dem Verlust neu verteilt; dabei gibt es keine zweite Auszahlung.";
     private static string DESCRIPTION_12 = "As the last action you are able to split your leader to have more than one. The newly created will gain its own land.";
     private static string DESCRIPTION_13 = "Do a split action with your leader! But be careful the new leader costs also money, which increases by time.";
 

@@ -22,6 +22,7 @@ public class RingMenu : MonoBehaviour
 
     internal void Execute(MenuButton.ActionType actionType)
     {
+        if (!Game.INSTANCE.CanPlan) return;
         switch (actionType)
         {
             case MenuButton.ActionType.IMPROVE_POWER: 
@@ -62,6 +63,7 @@ public class RingMenu : MonoBehaviour
 
     internal void Plan(bool hovered, MenuButton.ActionType actionType)
     {
+        if (!Game.INSTANCE.CanPlan) return;
         if (hovered)
         {
             PlannedActionController.INSTANCE.Plan(CreatePlannedAction(actionType));
@@ -76,8 +78,8 @@ public class RingMenu : MonoBehaviour
     {
         switch (actionType)
         {
-            case MenuButton.ActionType.MOVE: return new MoveAction(preacherKnob, preacher.transform.position);
-            case MenuButton.ActionType.SPLIT: return new SplitAction(preacher, preacher.transform.position);
+            case MenuButton.ActionType.MOVE: return new MoveAction(preacherKnob, preacher.GetPosition());
+            case MenuButton.ActionType.SPLIT: return new SplitAction(preacher, preacher.GetPosition());
             case MenuButton.ActionType.IMPROVE_INFLUENCE: return new IncreaseIncomeAction (preacher);
             case MenuButton.ActionType.IMPROVE_POWER: return new ImprovePowerAction(preacher);
         }

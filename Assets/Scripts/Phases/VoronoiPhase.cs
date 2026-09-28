@@ -1,36 +1,17 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
-
 public class VoronoiPhase : AbstractPhase
 {
     [SerializeField] private EvaluatePhase evaluatePhase;
     [SerializeField] private VoronoiController voronoi;
-    [SerializeField] private Game game;   
-    
-    public override PhaseType GetPhaseType()
+    [SerializeField] private Game game;
+    public override PhaseType GetPhaseType() => PhaseType.VORONOI;
+    public override void OnStart() { game.RunPhase(this, Calculate()); }
+    private IEnumerator Calculate()
     {
-        return PhaseType.VORONOI;
+        game.ApplyAccountingCells();
+        // Keep the phase observable for tutorial/UI; readiness is determined by Recalculate.
+        yield return null;
     }
-
-    public override void OnStart()
-    {
-        voronoi.MarkDirty();
-        StartCoroutine(Wait());
-    }
-
-    private IEnumerator Wait()
-    {
-        // todo lass polygon für polygpn sich verändern
-        yield return new WaitForSeconds(0.2f);
-        game.NextPhase();
-    }
-
-    public override void OnEnd()
-    {
-    }
-
-    public override AbstractPhase GetNextPhase()
-    {
-        return evaluatePhase;
-    }
+    public override AbstractPhase GetNextPhase() => evaluatePhase;
 }

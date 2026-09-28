@@ -15,6 +15,6 @@ public class MoneyLabel : MonoBehaviour
             humanVoronation = Game.INSTANCE.GetHumanPlayer();
         }
 
-        label.text = "" + (int)humanVoronation.Money;
+        label.text = humanVoronation == null ? "—" : humanVoronation.Money.ToString("0.##");
     }
 }

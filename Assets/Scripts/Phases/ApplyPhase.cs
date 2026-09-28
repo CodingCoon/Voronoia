@@ -1,36 +1,18 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
-
 public class ApplyPhase : AbstractPhase
 {
     [SerializeField] private VoronoiPhase voronoiPhase;
     [SerializeField] private Game game;
-
-    public override PhaseType GetPhaseType()
-    {
-        return PhaseType.APPLY;
-    }
-
+    public override PhaseType GetPhaseType() => PhaseType.APPLY;
     public override void OnStart()
     {
-        StartCoroutine(ExecuteActions());   
+        game.ResolveRound();
+        game.RunPhase(this, ExecuteActions());
     }
-
     private IEnumerator ExecuteActions()
     {
-        foreach (Leader preacher in game.GetPreachers())
-        {
-            yield return StartCoroutine(preacher.ApplyAction());
-        }
-        game.NextPhase();
+        yield return game.PresentActions();
     }
-
-    public override void OnEnd()
-    {
-    }
-
-    public override AbstractPhase GetNextPhase()
-    {
-        return voronoiPhase;
-    }
+    public override AbstractPhase GetNextPhase() => voronoiPhase;
 }

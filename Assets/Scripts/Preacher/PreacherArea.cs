@@ -10,11 +10,14 @@ public class PreacherArea : MonoBehaviour
     [SerializeField] private PreacherKnob knob;
 
     private IVoronation religion;
-    private Vector3[] points;
+    private Vector3[] points = System.Array.Empty<Vector3>();
+    public bool HasArea => points.Length >= 3;
+    internal Vector3[] CopyBounds() => (Vector3[])points.Clone();
 
     private void Awake()
     {
         areaController.spline.Clear();
+        collider.enabled = false;
     }
 
     public void Setup(IVoronation religion)
@@ -27,35 +30,51 @@ public class PreacherArea : MonoBehaviour
 
     public void SetBounds(Vector3[] positions)
     {
-        points = positions;
-        influenceBounds.positionCount = positions.Length;
-        influenceBounds.SetPositions(positions);
-
-        areaController.spline.Clear();
-
-        Vector2[] colliderPositions = new Vector2[positions.Length];
-        for (int i = 0; i < positions.Length; i++)
+        Vector3[] validated = PolygonGeometry.Validate(positions);
+        Vector2[] colliderPositions = new Vector2[validated.Length];
+        Vector3[] splinePositions = new Vector3[validated.Length];
+        for (int i = 0; i < validated.Length; i++)
         {
-            areaController.spline.InsertPointAt(i, positions[i]);
+            colliderPositions[i] = collider.transform.InverseTransformPoint(validated[i]);
+            splinePositions[i] = areaController.transform.InverseTransformPoint(validated[i]);
+        }
+        PolygonGeometry.Validate(splinePositions);
+        areaController.spline.Clear();
+        collider.enabled = false;
+        collider.pathCount = 0;
+        for (int i = 0; i < splinePositions.Length; i++)
+        {
+            areaController.spline.InsertPointAt(i, splinePositions[i]);
             areaController.spline.SetHeight(i, 0.01f);
         }
 
-        collider.points = colliderPositions;
+        influenceBounds.positionCount = validated.Length;
+        influenceBounds.SetPositions(validated);
+        if (validated.Length > 0)
+        {
+            collider.pathCount = 1;
+            collider.SetPath(0, colliderPositions);
+            collider.enabled = true;
+        }
+        points = validated;
     }
 
     internal float GetArea()
     {
-        var result = 0f;
-        for (int p = points.Length - 1, q = 0; q < points.Length; p = q++)
-        {
-            result += (Vector3.Cross(points[q], points[p])).magnitude;
-        }
-        return result * .5f;
+        return PolygonGeometry.Area(points);
     }
 
     public Vector2 ClosestPoint(Vector2 pos)
     {
-        return collider.ClosestPoint(pos);
+        if (!HasArea) throw new System.InvalidOperationException("No valid area for target selection.");
+        // Physics skin can put Collider2D.ClosestPoint outside the authored polygon.
+        return PolygonGeometry.ClosestPoint(points, pos);
+    }
+
+    public Vector2 ClosestPointInside(Vector2 position, Vector2 interiorReference, float boundaryMargin)
+    {
+        if (!HasArea) throw new System.InvalidOperationException("No valid area for target selection.");
+        return PolygonGeometry.ClosestPointInside(points, position, interiorReference, boundaryMargin);
     }
 
     internal void Dissolve(float progress)

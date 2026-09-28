@@ -12,8 +12,8 @@ public class TutorialHelper : MonoBehaviour
         {
             if (item.IsPlayer)
             {
-                Leader p = item.GetLeaders().First();
-                return p.HasAction();
+                Leader p = item.GetLeaders().FirstOrDefault();
+                return p != null && p.HasAction();
             }
         }
         return false;

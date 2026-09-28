@@ -1,52 +1,42 @@
+using System.Linq;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using VoronationCore;
 
 public class EvaluationPanel : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI incomeText;
+    public void Clear() { incomeText.text = string.Empty; gameObject.SetActive(false); }
 
-    private bool loaded = false;
-
-    void Update()
+    public void ShowRound(RoundResult result, FactionId? playerId)
     {
-        if (Game.INSTANCE.PhaseType == PhaseType.EVALUATION || Game.INSTANCE.PhaseType == PhaseType.DEATH)
+        gameObject.SetActive(true);
+        var text = new StringBuilder();
+        if (result != null && playerId.HasValue)
         {
-            if (! loaded)
+            FactionState before = result.Before.FindFaction(playerId.Value);
+            foreach (KnightState knight in before.Knights.OrderBy(item => item.Id))
             {
-                LoadText();
-                loaded = true;
+                text.AppendLine("Ritter #" + knight.Id.Number);
+                float balance = 0;
+                foreach (RoundBooking booking in result.Bookings.Where(item => item.KnightId == knight.Id &&
+                    item.Kind != BookingKind.DebtRelief))
+                {
+                    text.AppendLine(booking.Amount.ToString("+0.##;-0.##;0") + "\t" + booking.Label);
+                    balance += booking.Amount;
+                }
+                text.AppendLine("Saldo: " + balance.ToString("+0.##;-0.##;0"));
             }
-        }   
-        else
-        {
-            loaded = false;
-            incomeText.text = string.Empty;
+            FactionRoundSummary summary = result.FactionSummaries.First(item => item.FactionId == playerId.Value);
+            text.AppendLine("Kontostand: " + summary.MoneyAfterAccounting.ToString("0.##"));
         }
+        incomeText.text = text.ToString();
     }
 
-    private void LoadText()
+    public void ShowDebtRelief(Voronation player, int removedNumber)
     {
-        StringBuilder sb = new StringBuilder();
-
-        Voronation playerVoronation = Game.INSTANCE.GetHumanPlayer();
-        foreach (Leader leader in playerVoronation.GetLeaders())
-        {
-            sb.AppendLine("Leader #" + leader.Number);
-
-            foreach (IncomePosition ip in leader.GetPositions())
-            {
-                if (ip.Value < 0)
-                {
-                    sb.AppendLine("- " + Mathf.Abs((int) ip.Value) + "\t" + ip.Name);
-                }
-                else
-                {
-                    sb.AppendLine("+ " + (int) ip.Value + "\t" + ip.Name);
-                }
-
-            }
-        }
-        incomeText.text = sb.ToString();
+        incomeText.text += "\nRitter #" + removedNumber + " ausgeschieden\n+" +
+            player.DebtRelief.ToString("0.##") + "\tSchuldenerlass\nKontostand: " + player.Money.ToString("0.##");
     }
 }

@@ -16,6 +16,7 @@ public class NextButton : MonoBehaviour
     // Called from the UI
     public void NextPhase()
     {
+        if (!Game.INSTANCE.CanAdvance) return;
         animator.Play("Click");
         Game.INSTANCE.NextPhase();
     }
@@ -38,7 +39,7 @@ public class NextButton : MonoBehaviour
 
     private void UpdateInteractability()
     {
-        nextButton.SetInteractable(Game.INSTANCE.PhaseType == PhaseType.DEATH || Game.INSTANCE.PhaseType == PhaseType.ACTION);
+        nextButton.SetInteractable(Game.INSTANCE.CanAdvance);
 
         if (GameManager.Instance.IsTutorial)
         {

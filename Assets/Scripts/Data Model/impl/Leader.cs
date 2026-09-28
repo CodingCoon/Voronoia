@@ -1,58 +1,74 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using VoronationCore;
 
 public class Leader : MonoBehaviour, ILeader, IVoronoiCellOwner
 {
     private static readonly Color NEGATIV = new Color(0.7882354f, 0.2745098f, 0.3960785f);
     private static readonly Color POSITIVE = new Color(0.2352941f, 0.5607843f, 0.482353f);
-
-    private static readonly int PRICE = -40;
-
+    private const int PRICE = -40;
     [SerializeField] private PreacherKnob knob;
     [SerializeField] private PreacherArea area;
     [SerializeField] private Animator animator;
     [SerializeField] private Prototype<VFX> vfxPrototype;
-    [SerializeField] private SpriteRenderer numberRenderer;
+    [SerializeField] private TextMeshPro numberLabel;
     [SerializeField] private TextMeshPro income;
+    private Tween incomeTween;
+    private Tween dissolveTween;
+    private float power = 1f;
+    private float incomeFactor = 1f;
+    private int age;
+    private readonly List<IncomePosition> positions = new List<IncomePosition>();
 
-    public NumberSprites numberSprites; 
-
+    public KnightId Id { get; private set; }
     public IVoronation Voronation { get; private set; }
-    public int Number { get; private set; }
-    public int RoundsExist { get; private set; } = 0;
-    public float Power { get; private set; } = 1f;          // increases range to boundaries
-    public float Income { get; private set; } = 1f;      // increases income from area
+    public int Number => Id.Number;
+    public int RoundsExist => age;
+    public float Power => power;
+    public float Income => incomeFactor;
     public IAction Action { get; private set; } = NoAction.NO_ACTION;
+    public float RoundBalance { get; private set; }
 
-    private List<IncomePosition> positions = new List<IncomePosition>();
-
-
-    public override string ToString()
-    {
-        return "Preacher (" + Voronation + ")";
-    }
+    public override string ToString() => "Ritter " + Number + " (" + Voronation + ")";
 
     public void Setup(int number, IVoronation voronation, Vector2 position)
     {
-        name = "Leader #" + number; 
-        this.Number = number;
-        this.Voronation = voronation;
+        if (number < 1 || !PolygonGeometry.IsFinite(position) || !(voronation is Voronation faction) || !faction.HasIdentity)
+            throw new ArgumentException("Invalid knight setup.");
+        Id = new KnightId(faction.Id, number);
+        name = "Leader #" + number;
+        Voronation = voronation;
         knob.transform.position = new Vector3(position.x, position.y, -5);
-        knob.Setup(Voronation);
-        area.Setup(Voronation);
+        knob.Setup(voronation);
+        area.Setup(voronation);
+        numberLabel.text = number.ToString();
+        numberLabel.gameObject.SetActive(!voronation.IsAi);
         UpdateAnimator();
-        UpdateNumberRenderer();
         income.gameObject.SetActive(false);
+    }
 
+    internal KnightState CreateState() => new KnightState(Id, GetPosition(), power, incomeFactor, age,
+        ToVector2(area.CopyBounds()), area.GetArea());
+
+    internal void SyncState(KnightState state, bool syncPosition)
+    {
+        if (state.Id != Id) throw new InvalidOperationException("Cannot bind a different knight identity.");
+        power = state.Power;
+        incomeFactor = state.IncomeFactor;
+        age = state.Age;
+        if (syncPosition) knob.transform.position = new Vector3(state.Position.x, state.Position.y, knob.transform.position.z);
+        UpdateAnimator();
     }
 
     public void Reset()
     {
+        incomeTween?.Kill();
         positions.Clear();
+        RoundBalance = 0;
         Action = NoAction.NO_ACTION;
         UpdateAnimator();
         income.gameObject.SetActive(false);
@@ -60,179 +76,123 @@ public class Leader : MonoBehaviour, ILeader, IVoronoiCellOwner
 
     public void SetAction(IAction action)
     {
-        this.Action = action;
+        action ??= NoAction.NO_ACTION;
+        if (Game.INSTANCE != null)
+        {
+            if (!Game.INSTANCE.CanPlan) return;
+            CommandValidation validation = Game.INSTANCE.PlanAction(ToCommand(action));
+            if (!validation.IsValid) return;
+        }
+        Action = action;
         UpdateAnimator();
     }
 
-    public bool HasAction()
+    internal void ClearAction()
     {
-        return Action != null && (Action is not NoAction);
+        Action = NoAction.NO_ACTION;
+        UpdateAnimator();
     }
 
-    public IEnumerator ApplyAction()
+    public bool HasAction() => Action != null && Action is not NoAction;
+
+    internal void SetRoundAccounting(IEnumerable<RoundBooking> bookings)
     {
-        positions.Add(new IncomePosition(Action.Name, Action.GetPrice()));  
-        IAction tmpAction = this.Action;
-        this.Action = NoAction.NO_ACTION;
-        RoundsExist++;
-        yield return tmpAction.Execute();
-    }
-
-    public void Evaluate()
-    {
-        positions.Add(new IncomePosition("Income", GetIncome()));
-        positions.Add(new IncomePosition("Leader", GetPrice()));
-        positions.Add(new IncomePosition("Action", Action.GetPrice()));
-
-        float income = GetIncome() + GetPrice() + Action.GetPrice();
-        StartCoroutine(ShowIncome((int) income));
-    }
-
-    private IEnumerator ShowIncome(int incomeValue)
-    {
-        this.income.gameObject.SetActive(true);
-
-        this.income.color = incomeValue < 0 ? NEGATIV : POSITIVE;
-
-        float timeElapsed = 0;
-        float duration = 1.2f;
-        float progress = 0;
-        Vector2 targetPos = new Vector2(0, 2f); 
-        float fromFontSize = 10;
-        float toFontSize = 18;
-
-
-        while (progress < 1)
+        positions.Clear();
+        RoundBalance = 0;
+        foreach (RoundBooking booking in bookings)
         {
-            timeElapsed += Time.deltaTime;
-            progress = timeElapsed / duration;
-            progress = Math.Clamp(progress, 0, 1);
-
-            this.income.text = "" + (int) Mathf.Lerp(0, incomeValue, progress);
-            this.income.fontSize = Mathf.Lerp(fromFontSize, toFontSize, progress);
-            this.income.rectTransform.anchoredPosition = Vector2.Lerp(Vector2.zero, targetPos, progress);
-            yield return null;
+            positions.Add(new IncomePosition(booking.Label, booking.Amount));
+            RoundBalance += booking.Amount;
         }
-
     }
 
-    public int GetPrice()
+    public void Evaluate() { }
+
+    public Tween ShowIncome()
     {
-        return PRICE * RoundsExist;
+        incomeTween?.Kill();
+        income.gameObject.SetActive(true);
+        income.color = RoundBalance < 0 ? NEGATIV : POSITIVE;
+        incomeTween = DOVirtual.Float(0, 1, 1.2f, progress =>
+        {
+            income.text = ((int)(RoundBalance * progress)).ToString();
+            income.fontSize = Mathf.Lerp(10, 18, progress);
+            income.rectTransform.anchoredPosition = Vector2.Lerp(Vector2.zero, new Vector2(0, 2), progress);
+        }).SetEase(Ease.Linear).SetLink(gameObject);
+        return incomeTween;
     }
 
-    public Vector2 GetPosition()
-    {
-        return knob.transform.position;
-    }
+    public int GetPrice() => PRICE * age;
+    public Vector2 GetPosition() => knob.transform.position;
+    public List<IncomePosition> GetPositions() => positions;
+    public float GetArea() => area.GetArea();
+    internal Vector3[] CopyBounds() => area.CopyBounds();
 
-    public List<IncomePosition> GetPositions()
-    {
-        return positions;
-    }
+    public void HideKnob() { knob.HidePreview(); }
+    public void UpdateVoronoi(List<Vector3> points) { area.SetBounds(points.ToArray()); }
+    internal Tween AnimateMove(Vector2 target, float duration) => knob.AnimateMove(target, duration);
+    internal Tween AnimateAppearance(float duration) => knob.AnimateAppearance(duration);
 
-    private float GetIncome()
+    public Tween AnimateRemoval()
     {
-        return area.GetArea() * Income;
-    }
-
-    public float GetArea()
-    {
-        return area.GetArea();
-    }
-
-    public PreacherKnob Split(Vector2 position)
-    {
-        Leader preacher = Voronation.AddPreacher(position);
-        float power = (Power - 1) / 2;
-        float influence = (Income - 1) / 2;
-        Power -= power;
-        Income -= influence;
-        preacher.Power = Power;
-        preacher.Income = Income;
-        return preacher.knob;
-    }
-
-    public void ImprovePower()
-    {
-        Power += 0.1f;
-    }
-
-    public void ImproveInfluence()
-    {
-        Income += 0.1f;
-    }
-
-    public void HideKnob()
-    {
-        knob.HidePreview();
-    }
-
-    public void UpdateVoronoi(List<Vector3> positions)
-    {
-        area.SetBounds(positions.ToArray());
+        CancelInteraction();
+        dissolveTween?.Kill();
+        dissolveTween = DOVirtual.Float(0, 1, 1, Dissolve).SetEase(Ease.Linear).SetLink(gameObject);
+        return dissolveTween;
     }
 
     internal void Dissolve(float progress)
     {
-        float scale = 1 - Math.Clamp(progress, 0f, 1f);
-        transform.localScale = new Vector3(scale, scale);
+        float scale = 1 - Mathf.Clamp01(progress);
+        knob.transform.localScale = new Vector3(scale, scale, 1);
         area.Dissolve(progress);
     }
 
-    // The pulsing animator is shown, when its the leader belongs to the human player, the action is null or it is the NO_ACTION
+    public void CancelInteraction()
+    {
+        knob.CancelInteraction();
+        animator.gameObject.SetActive(false);
+    }
+
+    public void CancelAnimations()
+    {
+        incomeTween?.Kill();
+        dissolveTween?.Kill();
+        knob.CancelAnimations();
+        CancelInteraction();
+    }
+
+    private void OnDisable() { CancelAnimations(); }
+
     private void UpdateAnimator()
     {
-        if (Voronation.IsAi)
-        {
-            animator.gameObject.SetActive(false);
-        }
-        else
-        {
-            animator.gameObject.SetActive(Action == null || Action == NoAction.NO_ACTION);
-        }
+        animator.gameObject.SetActive(!Voronation.IsAi && (Action == null || Action == NoAction.NO_ACTION));
     }
 
-    private void UpdateNumberRenderer()
-    {
-        if (Voronation.IsAi)
-        {
-            numberRenderer.sprite = null;
-        }
-        else
-        {
-            numberRenderer.sprite = numberSprites.Get(Number);
-        }
-    }
-
-    public IEnumerator ShowVFX(string name)
+    public IEnumerator ShowVFX(string effectName)
     {
         VFX vfx = vfxPrototype.Create(transform, knob.transform.position);
-        vfx.Play(name);
+        vfx.Play(effectName);
         yield return new WaitForSeconds(1f);
     }
 
-
-    [Serializable]
-    public class NumberSprites
+    private ActionCommand ToCommand(IAction action)
     {
-        [SerializeField] internal Sprite one;
-        [SerializeField] internal Sprite two;
-        [SerializeField] internal Sprite three;
-        [SerializeField] internal Sprite four;
-        [SerializeField] internal Sprite five;
+        ActionKind kind;
+        Vector2? target = null;
+        if (action is MoveAction move) { kind = ActionKind.Move; target = move.Target; }
+        else if (action is SplitAction split) { kind = ActionKind.Split; target = split.Target; }
+        else if (action is ImprovePowerAction) kind = ActionKind.ImprovePower;
+        else if (action is IncreaseIncomeAction) kind = ActionKind.ImproveIncome;
+        else if (action is NoAction) kind = ActionKind.None;
+        else throw new ArgumentException("Unknown action type.", nameof(action));
+        return new ActionCommand(Id.FactionId, Id, kind, target);
+    }
 
-        public Sprite Get(int number)
-        {
-            switch (number % 5)
-            {
-                case 1: return one;
-                case 2: return two;
-                case 3: return three;
-                case 4: return four;
-                case 5: return five;
-            }
-            throw new System.Exception("snh: " + number);
-        }
+    private static Vector2[] ToVector2(IReadOnlyList<Vector3> points)
+    {
+        var result = new Vector2[points.Count];
+        for (int i = 0; i < points.Count; i++) result[i] = points[i];
+        return result;
     }
 }

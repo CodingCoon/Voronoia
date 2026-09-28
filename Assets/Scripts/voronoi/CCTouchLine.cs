@@ -24,9 +24,12 @@ public class CCTouchLine
     {
         Vector2 secondToFirst = SecondPoint - FirstPoint;
         Vector2 pointToFirst = point - FirstPoint;
+        if (!PolygonGeometry.IsFinite(point) || secondToFirst.sqrMagnitude < EPSILON * EPSILON) return false;
+        float cross = secondToFirst.x * pointToFirst.y - secondToFirst.y * pointToFirst.x;
+        if (Mathf.Abs(cross) > PolygonGeometry.Epsilon * secondToFirst.magnitude) return false;
         float partInBetween = Vector2.Dot(pointToFirst, secondToFirst) /
                                 Vector3.Dot(secondToFirst, secondToFirst);
-        return 0 <= partInBetween && partInBetween <= 1;
+        return -EPSILON <= partInBetween && partInBetween <= 1 + EPSILON;
     }
 
     //public Vector2? GetIntersection(Vector2 otherPoint, Vector2 otherDirection)
@@ -46,12 +49,12 @@ public class CCTouchLine
     //}
     //}
 
-    public Vector2 CalcIntersection(CCPlane plane)
+    public Vector2? CalcIntersection(CCPlane plane)
     {
         Vector2 lineDir = (FirstPoint - SecondPoint).normalized;
         CCRay ray = new CCRay(FirstPoint, lineDir);
 
-        Vector2 intersectionPoint = plane.CalcIntersection(ray);
+        Vector2? intersectionPoint = plane.CalcIntersection(ray);
         return intersectionPoint;
     }
 
@@ -62,7 +65,7 @@ public class CCTouchLine
         float tmp = (other.SecondPoint.x - other.FirstPoint.x) * (SecondPoint.y - FirstPoint.y) - 
                     (other.SecondPoint.y - other.FirstPoint.y) * (SecondPoint.x - FirstPoint.x);
 
-        if (tmp == 0)
+        if (!PolygonGeometry.IsFinite(tmp) || Mathf.Abs(tmp) <= EPSILON)
         {
             // No solution!
             return null;

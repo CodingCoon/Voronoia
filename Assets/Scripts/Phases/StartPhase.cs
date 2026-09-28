@@ -7,6 +7,7 @@ public class StartPhase : AbstractPhase
     [SerializeField] private TutorialSetup tutorialSetup;
     [SerializeField] private Random6PlayerSetup defaultGameSetup;
     [SerializeField] private Game game;
+    [SerializeField] private VoronoiController voronoi;
 
     public override PhaseType GetPhaseType()
     {
@@ -24,14 +25,13 @@ public class StartPhase : AbstractPhase
             defaultGameSetup.GeneratePlayers();
         }
 
-        StartCoroutine(HideBlend());   
+        game.RunPhase(this, HideBlend());
     }
 
     private IEnumerator HideBlend()
     {
-
         yield return null;
-        game.NextPhase();
+        game.InitializeMatch(voronoi.HalfMapSize);
     }
 
     public override void OnEnd() {}

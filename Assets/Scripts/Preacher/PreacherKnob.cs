@@ -1,30 +1,30 @@
-﻿using System;
-using System.Collections;
-using Unity.VisualScripting;
+using DG.Tweening;
+using TMPro;
 using UnityEngine;
+using VoronationCore;
 
 public class PreacherKnob : MonoBehaviour, IMouseListener
-{   
+{
     private IVoronation voronation;
-
     private bool hovered;
-
     [SerializeField] private Leader preacher;
     [SerializeField] private SpriteRenderer inner;
-    [SerializeField] private SpriteRenderer number;
+    [SerializeField] private TextMeshPro numberLabel;
     [SerializeField] private new CircleCollider2D collider;
     [SerializeField] private GameObject preview;
     [SerializeField] private PreacherArea area;
     [SerializeField] private TrailRenderer trail;
-
-    private PreviewType previewType = PreviewType.NONE;
-
     [SerializeField] private RingMenu ringMenu;
-    private bool showsRing = false;
+    private PreviewType previewType;
+    private bool showsRing;
+    private Tween ringTween;
+    private Tween actionTween;
+    private Vector3 restScale;
+    private bool targetValid;
 
     public void Setup(IVoronation religion)
     {
-        this.voronation = religion;
+        voronation = religion;
         inner.color = religion.Color;
         preview.SetActive(false);
         preview.transform.position = transform.position;
@@ -32,152 +32,155 @@ public class PreacherKnob : MonoBehaviour, IMouseListener
 
     private void Awake()
     {
+        restScale = transform.localScale;
         ringMenu.transform.localScale = Vector3.zero;
         ActivateTrail(false);
     }
 
     private void Update()
     {
-        if (voronation.IsAi) return;
-
-        if (Input.GetMouseButtonDown(0) && showsRing)
+        if (voronation == null || voronation.IsAi || Game.INSTANCE == null || !Game.INSTANCE.CanPlan) return;
+        if (previewType == PreviewType.MOVE || previewType == PreviewType.SPLIT)
         {
-            showsRing = false;
-            StartCoroutine(HideRing());
+            if (!area.HasArea) { CancelInteraction(); return; }
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 closest;
+            try
+            {
+                closest = area.ClosestPointInside(worldPosition, preacher.GetPosition(),
+                    RoundResolver.TargetMargin + PolygonGeometry.Epsilon * 2);
+            }
+            catch (System.InvalidOperationException)
+            {
+                targetValid = false;
+                preview.SetActive(false);
+                return;
+            }
+            targetValid = previewType != PreviewType.SPLIT ||
+                Vector2.Distance(closest, preacher.GetPosition()) >= RoundResolver.TargetMargin;
+            preview.SetActive(targetValid);
+            preview.transform.position = new Vector3(closest.x, closest.y, 0);
+            if (targetValid) PlannedActionController.INSTANCE.UpdatePosition(closest);
         }
-
         if (Input.GetMouseButtonDown(0))
         {
-            if (previewType == PreviewType.MOVE)
+            if (showsRing) HideRing();
+            if (previewType == PreviewType.MOVE && targetValid)
             {
                 preacher.SetAction(new MoveAction(this, preview.transform.position));
                 previewType = PreviewType.SET;
+                PlannedActionController.INSTANCE.UnPlan();
             }
-            else if (previewType == PreviewType.SPLIT)
+            else if (previewType == PreviewType.SPLIT && targetValid)
             {
                 preacher.SetAction(new SplitAction(preacher, preview.transform.position));
                 previewType = PreviewType.SET;
-
+                PlannedActionController.INSTANCE.UnPlan();
             }
         }
-
         if (Input.GetMouseButtonDown(1))
         {
-            if (Game.INSTANCE.PhaseType != PhaseType.ACTION) return;
-            if (showsRing)
-            {
-                showsRing = false;
-                StartCoroutine(HideRing());
-            }
-            else if (hovered)
-            {
-                showsRing = true;
-                StartCoroutine(ShowRing());
-            }
-            
+            if (showsRing) HideRing();
+            else if (hovered) ShowRing();
             if (previewType == PreviewType.SET) return;
             previewType = PreviewType.NONE;
             HidePreview();
-        }
-        
-        if (previewType == PreviewType.SPLIT || previewType == PreviewType.MOVE)
-        {
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            preview.SetActive(true);
-
-            Vector2 closestPoint = area.ClosestPoint(worldPosition);
-            PlannedActionController.INSTANCE.UpdatePosition(closestPoint);
-            preview.transform.position = new Vector3(closestPoint.x, closestPoint.y, 0);
+            PlannedActionController.INSTANCE.UnPlan();
         }
     }
-
 
     internal void StartDrag(PreviewType type)
     {
+        if (!Game.INSTANCE.CanPlan || !area.HasArea) return;
         previewType = type;
+        targetValid = false;
     }
 
-    private IEnumerator ShowRing()
+    private void ShowRing()
     {
+        ringTween?.Kill();
+        showsRing = true;
         ringMenu.OnShow();
-        float timeElapsed = 0f;
-        float progress = 0f;
-        Vector2 startScale = transform.localScale;
-        Vector2 endScale = startScale - new Vector2(0.2f, 0.2f);
-
-        while (progress < 1f)
-        {
-            timeElapsed += Time.deltaTime;
-            progress = Mathf.Clamp(timeElapsed / 0.1f, 0f, 1f);
-            transform.localScale = Vector2.Lerp(startScale, endScale, progress);
-            yield return null;
-        }
-
-        progress = 0f;
-        timeElapsed = 0f;
-        Vector2 ringTargetScale = new Vector2(6f, 6f);
-
-        while (progress < 1f)
-        {
-            timeElapsed += Time.deltaTime;
-            progress = Mathf.Clamp(timeElapsed / 0.5f, 0f, 1f);
-            transform.localScale = Vector2.Lerp(endScale, startScale, progress);
-            ringMenu.transform.localScale  = Vector2.Lerp(Vector2.zero, ringTargetScale, progress);
-            ringMenu.transform.eulerAngles = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 360f), progress);
-            yield return null;
-        }
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(transform.DOScale(restScale - new Vector3(0.2f, 0.2f, 0), 0.1f));
+        sequence.Append(transform.DOScale(restScale, 0.5f));
+        sequence.Join(ringMenu.transform.DOScale(new Vector3(6, 6, 1), 0.5f));
+        sequence.Join(ringMenu.transform.DOLocalRotate(new Vector3(0, 0, 360), 0.5f, RotateMode.FastBeyond360));
+        ringTween = sequence.SetLink(gameObject);
     }
 
-    private IEnumerator HideRing()
+    private void HideRing()
     {
-        float timeElapsed = 0f;
-        float progress = 0f;
-        Vector2 startScale = ringMenu.transform.localScale;
-
-        while (progress < 1f)
-        {
-            timeElapsed += Time.deltaTime;
-            progress = Mathf.Clamp(timeElapsed / 0.5f, 0f, 1f);
-            ringMenu.transform.localScale = Vector2.Lerp(startScale, Vector2.zero, progress);
-            yield return null;
-        }
+        ringTween?.Kill();
+        showsRing = false;
+        ringTween = DOTween.Sequence()
+            .Append(ringMenu.transform.DOScale(Vector3.zero, 0.2f))
+            .Join(transform.DOScale(restScale, 0.2f))
+            .SetLink(gameObject);
     }
 
-    public void HidePreview()
+    public Tween AnimateMove(Vector2 target, float duration)
     {
-        preview.SetActive(false);
+        actionTween?.Kill();
+        ActivateTrail(true);
+        actionTween = transform.DOMove(new Vector3(target.x, target.y, transform.position.z), duration)
+            .SetEase(Ease.Linear).SetLink(gameObject)
+            .OnKill(() => { ActivateTrail(false); HidePreview(); });
+        return actionTween;
     }
 
-    internal void SetColor(float progress)
+    public Tween AnimateAppearance(float duration)
     {
-        inner.color = Color.Lerp(Color.clear, voronation.Color, progress);
+        actionTween?.Kill();
+        SetColor(0);
+        actionTween = DOVirtual.Float(0, 1, duration, SetColor).SetEase(Ease.Linear).SetLink(gameObject);
+        return actionTween;
     }
 
-    public void OnHover(bool hovered)
+    public void CancelInteraction()
     {
-        if (voronation.IsAi) return;
-        this.hovered = hovered;
+        ringTween?.Kill();
+        showsRing = hovered = false;
+        previewType = PreviewType.NONE;
+        targetValid = false;
+        ringMenu.transform.localScale = Vector3.zero;
+        ringMenu.transform.localRotation = Quaternion.identity;
+        transform.localScale = restScale;
+        HidePreview();
+        if (voronation != null) inner.color = voronation.Color;
+        numberLabel.color = Color.black;
+    }
+
+    public void CancelAnimations()
+    {
+        actionTween?.Kill();
+        CancelInteraction();
+        ActivateTrail(false);
+    }
+
+    private void OnDisable() { CancelAnimations(); }
+    public void HidePreview() { preview.SetActive(false); }
+    internal void SetColor(float progress) { inner.color = Color.Lerp(Color.clear, voronation.Color, progress); }
+
+    public void OnHover(bool value)
+    {
+        if (voronation == null || voronation.IsAi) return;
+        hovered = value && Game.INSTANCE != null && Game.INSTANCE.CanPlan;
         if (hovered)
         {
             LeaderSelectionManager.INSTANCE.UpdateLeader(preacher);
             inner.color = Color.clear;
-            number.color = voronation.Color;
+            numberLabel.color = voronation.Color;
         }
         else
         {
-            LeaderSelectionManager.INSTANCE.UpdateLeader(null);
+            if (LeaderSelectionManager.INSTANCE != null && LeaderSelectionManager.INSTANCE.Leader == preacher)
+                LeaderSelectionManager.INSTANCE.UpdateLeader(null);
             inner.color = voronation.Color;
-            number.color = Color.black;
+            numberLabel.color = Color.black;
         }
     }
 
-    public void ActivateTrail(bool trail)
-    {
-        this.trail.enabled = trail; 
-    }
-
-    public enum PreviewType
-    {
-        NONE, MOVE, SPLIT, SET
-    }
+    public void ActivateTrail(bool active) { trail.enabled = active; }
+    public enum PreviewType { NONE, MOVE, SPLIT, SET }
 }

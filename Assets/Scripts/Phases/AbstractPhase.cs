@@ -12,4 +12,6 @@ public abstract class AbstractPhase : MonoBehaviour
     }
 
     public abstract AbstractPhase GetNextPhase();
+
+    public virtual void Cancel() { StopAllCoroutines(); }
 }

@@ -16,6 +16,7 @@ public class ScreenBlend : MonoBehaviour
 
     private bool initialOn; 
     private bool shown;
+    private bool leaving;
 
     private void Awake()
     {
@@ -38,6 +39,8 @@ public class ScreenBlend : MonoBehaviour
 
     public void FadeOut(Action onEnd)
     {
+        if (leaving) return;
+        leaving = true;
         shown = true;
         StartCoroutine(Show(onEnd));
     }

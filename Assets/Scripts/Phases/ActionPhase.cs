@@ -4,6 +4,7 @@ public class ActionPhase : AbstractPhase
 {
     [SerializeField] private ApplyPhase applyPhase;
     [SerializeField] private Game game;
+    [SerializeField] private EvaluationPanel evaluationPanel;
 
     
     public override PhaseType GetPhaseType()
@@ -13,11 +14,12 @@ public class ActionPhase : AbstractPhase
 
     public override void OnStart()
     {
-        game.GetPreachers().ForEach(p => p.Reset());
+        evaluationPanel.Clear();
     }
 
     public override void OnEnd()
     {
+        game.ClearInteraction();
         foreach (Leader preacher in game.GetPreachers())
         {
             if (! preacher.HasAction() && preacher.Voronation.IsAi)
